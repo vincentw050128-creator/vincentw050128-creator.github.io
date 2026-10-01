@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>新叶集章 · 卡片顺序对调 v5</title><style>
+:root{--green:#075b46;--text:#111821;--muted:#777f90;--page:#f3f4f7;--red:#c90016}*{box-sizing:border-box}body{margin:0;color:var(--text);font:14px/1.5 -apple-system,BlinkMacSystemFont,'Microsoft YaHei','PingFang SC',sans-serif}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;cursor:pointer;border:0}button,a{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible{outline:3px solid #358776;outline-offset:3px}h1,h2,h3,p{margin:0}h1{font-size:29px;line-height:1.3}h2{font-size:19px;line-height:1.4}h3{font-size:18px}p{color:var(--muted)}.screen{background:var(--page)}.icon{width:22px;height:22px;object-fit:contain;vertical-align:middle;flex-shrink:0}.content{position:absolute;inset:0 0 87px;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}.content::-webkit-scrollbar{display:none}.card{border-radius:17px;background:#fff;box-shadow:0 4px 16px #23334105}.task-header{position:absolute;top:57px;left:0;right:0;text-align:center}.task-header h1{font-family:'SimSun','Songti SC',serif;font-size:23px;font-weight:700;letter-spacing:2px}.task-header p{font-size:15px;margin-top:3px}.task-content{top:119px;padding:0 12px 8px}.task-content>.card+.card{margin-top:11px}.task-page .site-status{color:#111b29;filter:none}.souvenir{height:269px;padding:14px 15px;overflow:hidden;position:relative}.souvenir h2{font-family:'SimSun','Songti SC',serif;font-size:28px;line-height:1.4;letter-spacing:-.7px}.souvenir>p{font-size:13px;white-space:nowrap;margin-top:2px;letter-spacing:-.4px}.text-link{display:inline-flex;align-items:center;color:var(--green);white-space:nowrap;gap:2px;font-size:14px}.text-link .icon{width:16px;height:16px}.souvenir>.text-link{position:relative;z-index:1;margin-top:5px}.souvenir-art{position:absolute;bottom:0;left:0;right:0;height:177px;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 13px;background:#fafbf9}.souvenir-art>img{width:62%;height:100%;object-fit:contain;transform:rotate(-7deg);filter:drop-shadow(0 5px 6px #0002)}.magnet-placeholder{width:34%;height:115px;border-radius:12px;background:#edf3ed;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:#536b5b;font-size:11px}.magnet-placeholder .icon{width:45px;height:45px;opacity:.65}.stamp-card{padding:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:68px}.stamp-card h2{font-family:'SimSun','Songti SC',serif;font-size:16px;white-space:nowrap}.stamp-card p{font-size:12px;margin-top:2px}.stamp-card .text-link{font-size:12px}.dots{display:flex;flex:1;justify-content:space-between;position:relative;gap:3px}.dots:before{content:'';position:absolute;top:50%;width:100%;height:1px;background:#d6d9df}.dots i{position:relative;display:block;flex-shrink:0;width:8px;height:8px;border:1px solid #a6aabb;border-radius:50%;background:white}.dots i.done{background:var(--green);border-color:var(--green)}.journey{padding:12px 14px 10px}.journey>h2{font-family:'SimSun','Songti SC',serif;font-size:23px;letter-spacing:-.5px}.journey>p{font-size:12px;margin:3px 0 9px;white-space:nowrap;letter-spacing:-.6px}.place-photo{display:block;width:100%;height:112px;border-radius:9px;object-fit:cover;object-position:center 46%}.place-info{display:flex;justify-content:space-between;align-items:center;margin:5px 0 9px}.place-info h3{font-family:'SimSun','Songti SC',serif;font-size:19px}.place-info p{font-size:12px}.badge{border-radius:30px;padding:5px 14px;color:#69707d;background:#edeef2;font-size:12px}.primary{border:0;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--green);color:white;border-radius:99px;width:100%;min-height:39px;font-size:16px;font-weight:600;box-shadow:0 6px 14px #075b4610}.primary .icon{filter:brightness(0) invert(1);width:21px;height:21px}.task-tabs{position:absolute;bottom:28px;left:0;right:0;height:59px;background:#ffffffec;border-top:1px solid #dfe1e7;display:grid;grid-template-columns:repeat(5,1fr);z-index:5}.task-tabs a{font-size:11px;color:#707788;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}.task-tabs a>span{height:31px;width:60px;display:flex;align-items:center;justify-content:center;border-radius:30px}.task-tabs .icon{width:25px;height:25px}.task-tabs .active{color:var(--red)}.task-tabs .active>span{background:#fae9ec}.task-tabs .active .icon{filter:invert(14%) sepia(85%) saturate(4848%) hue-rotate(344deg) brightness(76%) contrast(121%)}.home-indicator{position:absolute;width:120px;height:5px;bottom:8px;left:50%;transform:translateX(-50%);border-radius:9px;background:#080d12;z-index:6}.reward-content{background:#f6f7f5}.reward-hero{height:334px;position:relative;overflow:hidden}.reward-hero>img:first-child{width:100%;height:100%;object-fit:cover}.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,#101c1977,#18251b15)}.hero-copy{position:absolute;top:121px;left:18px;color:#fff;z-index:1;text-shadow:0 2px 4px #0003}.hero-copy h1{font-size:31px}.hero-copy h2{font-size:16px;margin-top:3px}.hero-copy p{font-size:13px;color:#fff;margin-top:13px}.hero-postcard{position:absolute;bottom:7px;right:6px;width:47%;height:132px;object-fit:contain;transform:rotate(5deg);filter:drop-shadow(0 5px 8px #0005)}.top-actions{position:absolute;top:54px;left:18px;right:18px;display:flex;justify-content:space-between;pointer-events:none;z-index:4}.round-button{width:36px;height:36px;border-radius:50%;border:1px solid #ffffffae;background:#31393455;display:flex;align-items:center;justify-content:center;pointer-events:auto;backdrop-filter:blur(6px)}.round-button .icon{filter:brightness(0) invert(1);width:22px;height:22px}.reward-cards{position:relative;margin:-15px 11px 12px}.reward-progress{padding:13px 12px 15px}.progress-top{display:flex;align-items:center;gap:9px}.gift-disc{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#e8f1ee;flex-shrink:0}.gift-disc .icon{width:27px;height:27px}.progress-top h2{font-size:16px;white-space:nowrap}.progress-top strong{font-size:22px;color:var(--green)}.progress-top p{font-size:11px;white-space:nowrap}.small-link{margin-left:auto;display:flex;align-items:center;gap:0;border-radius:30px;background:#eef5f2;color:var(--green);padding:5px 7px;font-size:10px;white-space:nowrap}.small-link .icon{width:12px;height:12px}.segments{display:flex;gap:3px;margin-top:10px}.segments i{flex:1;height:8px;background:#dddfe4;border-radius:3px}.segments i.done{background:var(--green)}.coffee-card{margin-top:12px;display:grid;grid-template-columns:44% 1fr;gap:14px;padding:6px;align-items:center}.coffee-thumb{height:158px;display:block}.coffee-thumb img{width:100%;height:100%;object-fit:cover;border-radius:10px;object-position:48% center}.coffee-card>div{padding-right:3px}.coffee-card h2{font-size:16px}.coffee-card p{font-size:12px;line-height:1.7;margin:5px 0}.tags{display:flex;gap:5px;flex-wrap:wrap}.tags span{font-size:10px;color:#757d8c;background:#f1f2f5;padding:2px 5px;border-radius:5px;white-space:nowrap}.coffee-card .primary{margin-top:9px;min-height:38px;font-size:14px;gap:7px}.locked-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.locked-reward{padding:0;background:transparent;min-width:0;color:#858c9a;font-size:11px}.locked-image{height:90px;border-radius:9px;background:#e9e6e1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:5px}.locked-image>img{width:100%;height:100%;object-fit:cover;opacity:.35;filter:blur(1px)}.locked-image>img.icon{width:42px;height:42px;object-fit:contain}.lock-badge{position:absolute;top:28px;border-radius:6px;background:#ffffffe8;font-size:10px;color:#8a8b8d;padding:3px 6px}.locked-image b{position:absolute;bottom:5px;font-weight:500;font-size:11px}.detail-content{bottom:23px;background:#fff}.coffee-hero{height:490px;background:#d4c8b8}.coffee-hero img{width:100%;height:100%;object-fit:cover;object-position:48% center}.detail-sheet{position:relative;border-radius:24px 24px 0 0;background:#fff;margin-top:-19px;padding:17px 22px 10px}.detail-sheet h1{font-size:23px}.detail-sheet>p{font-size:15px;margin:6px 0}.detail-sheet .tags{gap:8px}.detail-sheet .tags span{font-size:12px;padding:2px 9px}.features{display:grid;grid-template-columns:repeat(3,1fr);margin:13px 0 16px;text-align:center}.features>div{position:relative}.features>div+div:before{content:'';position:absolute;top:20px;bottom:5px;left:0;width:1px;background:#eee}.feature-icon{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;width:45px;height:45px;background:#f4f3f1}.feature-icon .icon{width:29px;height:29px;opacity:.8}.features h2{font-size:12px;margin-top:3px}.features p{font-size:11px;line-height:1.5}.claim{height:47px;font-size:18px}.toast{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);width:max-content;max-width:85%;background:#172822eb;color:white;padding:10px 15px;border-radius:12px;z-index:100;opacity:0;pointer-events:none;font-size:13px}.toast.show{opacity:1}dialog{border:0;border-radius:22px;width:calc(100% - 40px);max-width:350px;padding:27px 23px 24px;color:var(--text);box-shadow:0 20px 70px #0004}dialog::backdrop{background:#10251a66}dialog h2{font-size:20px;margin-bottom:12px}dialog p{font-size:14px;line-height:1.8;margin:9px 0}dialog .primary{margin-top:17px}.dialog-close{position:absolute;right:10px;top:10px;background:transparent;padding:3px}.dialog-body{padding-top:9px}.dialog-body label{display:block;margin-top:15px}.dialog-body input{width:100%;accent-color:var(--green)}@media(max-width:375px){.progress-top{gap:6px}.gift-disc{width:37px;height:37px}.progress-top h2{font-size:14px}.small-link{font-size:9px;padding:5px}.stamp-card{gap:6px;padding:12px}.stamp-card h2{font-size:15px}.dots{gap:2px}.dots i{width:7px;height:7px}.souvenir>p{font-size:12px}.coffee-card{gap:9px}.coffee-card h2{font-size:15px}.tags{gap:3px}.tags span{padding:2px 3px;font-size:9px}}@media(max-height:780px){.task-content,.reward-content,.detail-content{scroll-behavior:smooth}}
+/* 首屏校准：底部行动按钮完整可见，短屏继续保留自然滚动。 */
+.task-page .souvenir{height:242px}
+.task-page .souvenir-art{height:150px}
+.task-page .journey .place-photo{height:104px}
+/* v2：统一卡片间距和导航上方留白，文创图片完整呈现。 */
+.task-page .task-content{display:flex;flex-direction:column;gap:11px;padding-bottom:11px}
+.task-page .task-content>.card{flex-shrink:0;margin-top:0}
+.task-page .souvenir{flex:1 0 190px;height:auto}
+.task-page .souvenir-art{top:92px;bottom:0;height:auto;padding:0;background:#fff;display:block}
+.task-page .souvenir-art>img{display:block;width:100%;height:100%;object-fit:contain;transform:none;filter:none}
+/* 咖啡详情局部调整：卡片上移12px，标题、介绍与标签居中。 */
+.detail-page .detail-sheet{margin-top:-31px}
+.detail-page .detail-sheet>h1,.detail-page .detail-sheet>p{text-align:center}
+.detail-page .detail-sheet>.tags{justify-content:center}
+
+</style><style>
+/* 仅适配展示容器，不覆盖页面内容配色、字体或图片裁切。 */
+html,body{background:radial-gradient(60% 80% at 50% 0%,oklch(98% 0.006 85) 0%,oklch(98% 0.004 95) 60%)}
+.device.unified-device > .screen {position:relative;width:100%;height:100%;overflow:hidden;box-sizing:border-box}
+.unified-device > .unified-island { position:absolute;z-index:90;top:22px;left:50%;translate:-50%;width:124px;height:36px;border-radius:99px;background:#000;pointer-events:none; }
+.unified-device > .unified-rail { position:absolute;width:4px;border-radius:3px;background:#09090b; }
+.unified-device .splash-content {padding-left:22px;padding-right:22px}
+.unified-rail.r1 {left:-3px;top:174px;height:32px}.unified-rail.r2{left:-3px;top:220px;height:60px}.unified-rail.r3{left:-3px;top:290px;height:60px}.unified-rail.r4{right:-3px;top:250px;height:100px}
+.site-status{position:absolute;z-index:89;top:0;left:0;right:0;height:47px;padding:18px 26px 0;box-sizing:border-box;display:flex;align-items:flex-start;justify-content:space-between;pointer-events:none;color:#fff;font:600 15px/21px -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;letter-spacing:-.01em;filter:drop-shadow(0 1px 1px #0009)}
+.site-status .site-time{font-family:ui-monospace,'SF Mono',Menlo,monospace}
+.site-status .site-signals{display:inline-flex;align-items:center;gap:6px;height:21px}
+.site-status svg{display:block;width:17px;height:11px;fill:currentColor;flex-shrink:0}
+.site-status svg.site-battery{width:25px}
+/* 首页基准：59px 导航栏 + 28px 底部手势区域。 */
+body[data-unified-tabs] .screen > .tabbar { height:59px;min-height:59px;box-sizing:border-box;padding:6px 0 2px;border-top-width:1px; }
+body[data-unified-tabs] .screen > .tabbar .tab { height:50px;min-height:0;padding:6px 0 4px;gap:2px;font-size:10px;line-height:14px;box-sizing:border-box; }
+body[data-unified-tabs] .screen > .tabbar .tab svg {width:24px;height:24px;flex-shrink:0}
+body[data-unified-tabs] .screen > .tabbar:has(+ .home) {bottom:28px}
+body[data-unified-tabs] .screen:has(> .home) > .content {bottom:87px}
+body[data-unified-tabs] .screen:has(> .home) > .map,body[data-unified-tabs] .screen:has(> .home) > .sheet {bottom:87px}
+body[data-unified-tabs] .screen:has(> .home) > .list-button {bottom:103px}
+body[data-unified-tabs] .screen > .home {bottom:8px}
+[data-nav], [data-pending] { cursor: pointer; }
+[role="button"]:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.xinye-notice { position:absolute; z-index:200; bottom:110px; left:50%; transform:translateX(-50%); max-width:85%; width:max-content; padding:10px 16px; border-radius:14px; color:white; background:rgba(25,25,25,.88); font-size:13px; opacity:0; pointer-events:none; transition:opacity .15s; }
+.xinye-notice.show { opacity:1; }
+@media (min-width:761px) {
+  html,body {margin:0;width:100%;height:100dvh;min-height:100dvh;box-sizing:border-box;overflow:hidden;background:radial-gradient(60% 80% at 50% 0%,oklch(98% 0.006 85) 0%,oklch(98% 0.004 95) 60%);}
+  body {display:grid;place-items:center;padding:16px;}
+  body > .stage {position:relative;display:block;width:390px;height:884.8px;min-height:0;max-width:none;flex-shrink:0;padding:0;margin:0;}
+  .stage > .site-caption {position:absolute;top:0;left:50%;transform:translateX(-50%);margin:0;padding:0;height:16.8px;line-height:16.8px;font:12px/16.8px ui-monospace,'SF Mono',Menlo,monospace;color:oklch(48% 0.012 70);letter-spacing:.08em;white-space:nowrap;text-align:center;}
+  .stage > .site-caption strong{color:inherit;font-weight:500}
+  .stage > .device.unified-device {position:absolute!important;top:40.8px;left:0;margin:0;box-sizing:border-box;}
+  .device.unified-device {position:relative;width:390px;height:844px;max-width:none;aspect-ratio:auto;padding:12px;border-radius:56px;background:linear-gradient(160deg,#2a2a2c 0%,#1a1a1c 50%,#0e0e10 100%);box-shadow:inset 0 0 0 1px #ffffff0a,inset 0 0 0 2px #000,0 28px 60px -12px #0007,0 8px 20px -8px #0006;}
+  .unified-device > .screen {border-radius:44px;box-shadow:none}
+  .device.unified-device::before,.device.unified-device::after {content:"";position:absolute;top:100px;bottom:100px;width:3px;background:linear-gradient(transparent,#ffffff18 12%,transparent 22%,transparent 78%,#ffffff12 90%,transparent)}
+  .device.unified-device::before {left:-1px}.device.unified-device::after {right:-1px}
+}
+@media (max-width:760px) {
+  html,body { width:100%; height:100%; min-height:100%; margin:0; padding:0; overflow:hidden; }
+  .stage { width:100%; height:100dvh; min-height:0; gap:0; display:block; }
+  .caption,.p05-stage-label { display:none; }
+  .device,.device.p05-apple-device {
+    width:100%; max-width:none; height:100dvh; max-height:none; aspect-ratio:auto;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    border-radius:0; box-shadow:none;
+  }
+  .device::before,.device::after,.rail,.btn-rail,.p05-rail { display:none; }
+  .screen,.p05-apple-device > .screen { width:100%; height:100%; border-radius:0; }
+  .island,.p05-island { top:calc(10px + env(safe-area-inset-top)); }
+  .unified-device > .unified-island {top:calc(10px + env(safe-area-inset-top))}
+  .unified-rail {display:none}
+  .content,.p05-scroll-content { overscroll-behavior-y:contain; }
+}
+
+</style><script src="../../js/打卡奖励/chrome.js" defer></script><script src="../../js/打卡奖励/navigation.js" defer></script><script src="../../js/打卡奖励/奖励演示.js" defer></script><style>
+/* v3：沿用原项目机框和导航，在页面内统一排版与卡片层次。 */
+.task-page,.xishan-page{-webkit-font-smoothing:antialiased;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif;color:#1d1d1f}
+.task-page .screen,.xishan-page .screen{background:#f5f5f7}
+.task-page .task-header h1{font-family:inherit;font-size:24px;font-weight:650;letter-spacing:-.7px}
+.task-page .task-header p{font-size:12px;letter-spacing:.4px;margin-top:5px;color:#86868b}
+.task-page .card,.xishan-page .card{border:1px solid #fff;border-radius:21px;box-shadow:0 3px 13px #14221c05;background:#ffffffed}
+.task-page .task-content{padding-left:14px;padding-right:14px}
+.task-page .souvenir{padding:15px 16px;min-height:194px;flex-basis:194px}
+.task-page .souvenir h2{font-family:inherit;font-size:25px;font-weight:650;letter-spacing:-1px;line-height:1.35}
+.task-page .souvenir>p{color:#86868b;font-size:11px;letter-spacing:0;margin-top:5px}
+.task-page .souvenir>.text-link{font-size:12px;margin-top:6px;font-weight:550}
+.task-page .souvenir-art{top:99px;bottom:9px;left:11px;right:11px;height:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 7px;background:transparent}
+.task-page .souvenir-art>img{display:block;width:64%;height:100%;object-fit:contain;transform:rotate(-5deg);filter:drop-shadow(0 5px 5px #00000012)}
+.task-page .magnet-placeholder{width:31%;height:100%;max-height:108px;border-radius:17px;background:#f2f5f2;gap:7px;color:#79847d;font-size:10px}
+.task-page .magnet-placeholder .icon{width:33px;height:33px;opacity:.58}
+.task-page .stamp-card{padding:14px 13px;gap:9px;min-height:73px}
+.task-page .stamp-card h2{font-family:inherit;font-weight:600;font-size:14px;letter-spacing:-.4px}
+.task-page .stamp-card h2 [data-count]{font-size:16px;color:#315f4f;font-variant-numeric:tabular-nums}
+.task-page .stamp-card p{font-size:10px;color:#86868b;margin-top:4px}
+.task-page .stamp-card .text-link{font-size:11px}
+.task-page .dots{gap:2px}.task-page .dots i{width:7px;height:7px;border-color:#c1c6cc}.task-page .dots .done{border-color:#315f4f;background:#315f4f}
+.task-page .journey{padding:14px 14px 12px}
+.task-page .journey>h2{font-family:inherit;font-size:21px;font-weight:650;letter-spacing:-.7px}
+.task-page .journey>p{font-size:11px;color:#86868b;letter-spacing:-.35px;margin:5px 0 10px}
+.task-page .journey .place-photo{border-radius:13px;height:104px}
+.task-page .place-info{margin:8px 0 11px}.task-page .place-info h3{font-family:inherit;font-size:17px;font-weight:600;letter-spacing:-.4px}.task-page .place-info p{font-size:11px;margin-top:1px;color:#86868b}
+.task-page .badge{font-size:11px;padding:5px 12px;background:#f2f2f7;color:#86868b}
+.task-page .primary,.xishan-page .primary{background:#315f4f;box-shadow:none;min-height:43px;font-size:15px;font-weight:600}
+.task-page .text-link{color:#315f4f}.task-page .task-tabs,.xishan-page .task-tabs{background:#fafafbdc;backdrop-filter:blur(22px);border-top-color:#e5e5e8}
+.reward-page .hero-postcard{width:50%;height:126px;object-fit:contain}
+.reward-page .locked-image{background:#eeeff1}
+.reward-page .locked-image>img{object-fit:contain;opacity:.72;filter:none;padding:4px 3px 20px}
+.reward-page .locked-image b{background:#f7f7f8df;left:0;right:0;bottom:0;padding:4px 0;font-size:10px}
+.reward-page .lock-badge{background:#ffffffeb;box-shadow:0 1px 8px #00000009;font-size:9px;top:29px}
+.xishan-page .xishan-content{display:flex;flex-direction:column;inset:0 0 87px;overflow:auto;padding-bottom:11px;scroll-behavior:auto}
+.xishan-hero{position:relative;flex:1 0 320px;min-height:320px;overflow:hidden}
+.xishan-hero>img{position:absolute;top:-52px;left:0;width:100%;height:calc(100% + 52px);object-fit:cover;object-position:50% 45%}
+.xishan-hero:after{content:'';position:absolute;inset:52% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.27) 55%,#f5f5f7)}
+.xishan-title{position:absolute;z-index:1;left:20px;bottom:36px;color:white;text-shadow:0 2px 10px #0005}
+.xishan-title h1{font:600 39px/1.25 'SimSun','Songti SC',serif;letter-spacing:1px}
+.xishan-title p{font-size:17px;color:white;letter-spacing:.2px;margin-top:5px;font-weight:500}
+.xishan-cards{display:flex;flex-direction:column;gap:11px;flex-shrink:0;position:relative;margin:-19px 14px 0}
+.xishan-task{padding:17px 15px 13px}
+.xishan-card-head{display:flex;align-items:center;justify-content:space-between;gap:9px}
+.xishan-card-head h2{font-size:22px;letter-spacing:-.5px;font-weight:650}
+.status-pill{padding:4px 11px;border-radius:13px;color:#315f4f;background:#eaf0ed;font-size:12px;font-weight:550}
+.status-pill:before{content:'';display:inline-block;width:8px;height:8px;background:#315f4f;border-radius:50%;margin-right:7px}
+.xishan-description{font-size:14px;line-height:1.7;margin:11px 0 12px;color:#717780}
+.xishan-progress{display:grid;grid-template-columns:minmax(0,1fr) 74px;gap:12px;margin-bottom:15px;align-items:center}
+.xishan-progress p{font-size:13px;color:#727984;white-space:nowrap}.xishan-progress strong{font-size:23px;color:#315f4f;font-weight:650;letter-spacing:-.5px}
+.xishan-progress .segments{margin-top:8px;gap:3px}.xishan-progress .segments i{height:8px;border-radius:8px}.xishan-progress .segments .done{background:#315f4f}
+.xishan-reward{border-left:1px solid #e4e5e6;padding-left:10px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:10px;line-height:1.5;color:#717780}
+.xishan-reward .icon{width:27px;height:27px;background:#f0f3f0;border-radius:8px;padding:2px}
+.xishan-page .primary{height:46px;font-size:17px;gap:12px}
+.xishan-intro{display:grid;grid-template-columns:minmax(0,1fr) 66px;gap:11px;padding:14px 15px;align-items:stretch}
+.xishan-intro h2{font-size:20px}.xishan-intro .text-link{font-size:10px;gap:0;color:#315f4f}.xishan-intro .text-link .icon{width:13px}
+.xishan-intro p{font-size:12px;line-height:1.75;color:#717780;margin-top:10px}
+.intro-photo{padding:0;overflow:hidden;border-radius:12px;background:#f1f2f3;min-height:96px}.intro-photo img{display:block;width:100%;height:100%;max-height:112px;object-fit:cover}
+.xishan-page .top-actions{top:56px;left:17px;right:17px}.xishan-page .round-button{width:38px;height:38px;background:#52635470;border-color:#ffffff70}
+.xishan-page [data-xishan-favorite][aria-pressed=true]{background:#315f4feb}
+.xishan-page .dialog-body .large-photo{display:block;width:100%;max-height:50vh;object-fit:contain;border-radius:12px}
+@media(max-width:375px){.task-page .stamp-card{gap:6px;padding:12px}.task-page .stamp-card h2{font-size:13px}.task-page .stamp-card h2 [data-count]{font-size:14px}.task-page .dots i{width:6px;height:6px}.task-page .journey>p{font-size:10px}.xishan-intro{grid-template-columns:minmax(0,1fr) 57px;gap:8px}.xishan-intro .text-link{font-size:9px}}
+
+</style></head><body class="task-page"><div class="stage"><div class="caption">新叶村数字导览 · 新叶集章</div><div class="device"><div class="screen"><header class="task-header"><h1>新叶集章</h1><p>游古村 · 集印章 · 领好礼</p></header><main class="content task-content"><section class="card journey"><h2>继续你的新叶之旅</h2><p>走进西山祠堂，感受新叶耕读传家的家风文化。</p><img class="place-photo" src="../../assets/打卡奖励/images/西山祠堂.jpg" alt="西山祠堂庭院"><div class="place-info"><div><h3>西山祠堂</h3><p>耕读传家 · 文脉绵长</p></div><span class="badge">待完成</span></div><a class="primary" href="西山祠堂打卡.html" ><img class="icon" src="../../assets/打卡奖励/icons/scan-line.svg" alt=""><span>前往打卡</span><img class="icon" src="../../assets/打卡奖励/icons/chevron-right.svg" alt=""></a></section>
+<section class="card stamp-card"><div><h2>我的集章&nbsp; <span data-count>3/8</span></h2><p>已完成 <span data-count>3/8</span></p></div><div class="dots" data-dots aria-label="集章进度"></div><a class="text-link" href="奖励兑换.html">查看足迹 <img class="icon" src="../../assets/打卡奖励/icons/chevron-right.svg" alt=""></a></section>
+<section class="card souvenir"><h2>把新叶带回家</h2><p>一张明信片，一枚冰箱贴，收藏游村记忆。</p><a class="text-link" href="奖励兑换.html">查看奖励 <img class="icon" src="../../assets/打卡奖励/icons/chevron-right.svg" alt=""></a><div class="souvenir-art"><img src="../../assets/打卡奖励/images/明信片.png" alt="新叶村明信片临时展示"><div class="magnet-placeholder"><img class="icon" src="../../assets/打卡奖励/icons/gift.svg" alt=""><span>新叶村冰箱贴</span></div></div></section></main><nav class="task-tabs" aria-label="主导航"><a  href="../P03_-V1.6-B2_Apple.html" data-external="home"><span><img class="icon" src="../../assets/打卡奖励/icons/tab-0.svg" alt=""></span>首页</a><a  href="../P03_景区导览地图_V2.1_交互版_Apple.html" data-external="map"><span><img class="icon" src="../../assets/打卡奖励/icons/tab-1.svg" alt=""></span>导览</a><a  href="../heritage/index.html" data-external="explore"><span><img class="icon" src="../../assets/打卡奖励/icons/tab-2.svg" alt=""></span>探索</a><a class="active" aria-current="page" href="任务入口_卡片顺序对调_v5.html" ><span><img class="icon" src="../../assets/打卡奖励/icons/tab-3.svg" alt=""></span>任务</a><a  href="../P07_我的新叶_V1.0_Apple.html" data-external="mine"><span><img class="icon" src="../../assets/打卡奖励/icons/tab-4.svg" alt=""></span>我的</a></nav><div class="home-indicator" aria-hidden="true"></div><div class="toast" role="status" aria-live="polite"></div><dialog><button class="dialog-close" aria-label="关闭"><img class="icon" src="../../assets/打卡奖励/icons/x.svg" alt=""></button><div class="dialog-body"></div></dialog></div></div></div></body></html>

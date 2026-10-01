@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>P06 门票</title>
+  <style>:root {
+  --bg: oklch(98% 0.004 95);
+  --paper: oklch(99.5% 0.002 90);
+  --surface: oklch(100% 0 0);
+  --ink: oklch(20% 0.018 70);
+  --muted: oklch(48% 0.012 70);
+  --line: oklch(90% 0.006 95);
+  --accent: oklch(52% 0.10 28);
+  --accent-soft: oklch(95% 0.012 30);
+  --shadow: 0 0 0 0.5px rgba(255,255,255,0.6) inset, 0 8px 28px rgba(0,0,0,0.10), 0 3px 10px rgba(0,0,0,0.06);
+  --shadow-lift: 0 0 0 0.5px rgba(255,255,255,0.7) inset, 0 16px 40px rgba(0,0,0,0.12), 0 6px 16px rgba(0,0,0,0.08);
+  --serif: 'Songti SC','STSong','SimSun',Georgia,serif;
+  --sans: -apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',sans-serif;
+  --device-status-height: 47px;
+  --navigation-top-gap: 10px;
+  --navigation-height: 48px;
+  --checkout-safe-space: calc(var(--checkout-height, 92px) + env(safe-area-inset-bottom) + 48px);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg); height: 100%; }
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.4 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+button, input { font: inherit; }
+
+/* Select page wrapper */
+.select-wrapper {
+  width: 100%;
+  height: 100%;
+  max-width: 430px;
+  margin: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(60% 80% at 50% 0%, oklch(98% 0.006 85) 0%, var(--bg) 60%);
+}
+
+/* Fixed topbar for select page */
+.topbar-fixed {
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + var(--device-status-height) + var(--navigation-top-gap));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 430px);
+  height: var(--navigation-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 100;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+.topbar-fixed.scrolled {
+  background: linear-gradient(to bottom, rgba(255,253,249,0.36), rgba(255,253,249,0));
+}
+.topbar-fixed h1 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.back {
+  border: 0;
+  background: transparent;
+  min-width: 44px;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 26px;
+  font-weight: 300;
+  transition: opacity 0.15s ease;
+  margin-left: -12px;
+}
+.back:active { opacity: 0.5; }
+
+/* WeChat capsule */
+.wx-capsule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0.5px solid oklch(88% 0.006 95);
+  border-radius: 16px;
+  min-width: 68px;
+  min-height: 30px;
+  padding: 0 10px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.wx-capsule svg {
+  width: 20px;
+  height: 20px;
+  color: var(--ink);
+  opacity: 0.7;
+}
+.wx-divider {
+  width: 1px;
+  height: 18px;
+  background: oklch(85% 0.008 95);
+}
+
+/* Select main scrollable */
+.select-main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: calc(env(safe-area-inset-top) + var(--device-status-height) + var(--navigation-top-gap) + var(--navigation-height) - 2px) 20px 32px;
+}
+.select-main::-webkit-scrollbar {
+  width: 3px;
+}
+.select-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+.select-main::-webkit-scrollbar-thumb {
+  background: rgba(176, 156, 133, 0.2);
+  border-radius: 999px;
+}
+
+/* Intro */
+.intro h2 {
+  font: 500 28px/1.25 var(--serif);
+  margin: 0 0 8px;
+  letter-spacing: 0.02em;
+}
+.intro { text-align: center; }
+.intro p {
+  color: var(--muted);
+  margin: 0 0 24px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Cards */
+.pass-card, .ticket-card, .info-card, .notice {
+  background: var(--paper);
+  border: 0.5px solid rgba(176, 156, 133, 0.12);
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.pass-card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  margin-bottom: 28px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.pass-card:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-lift);
+}
+.card-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  position: relative;
+}
+.pass-copy {
+  padding: 20px 22px 22px;
+  position: relative;
+}
+.pass-copy::before {
+  content: '';
+  position: absolute;
+  top: -32px;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: linear-gradient(to bottom, transparent 0%, var(--paper) 100%);
+  pointer-events: none;
+}
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+.card-top h3 {
+  font: 500 24px/1.2 var(--serif);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+.badge {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 18px;
+  padding: 4px 10px;
+  font-size: 11px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.desc {
+  color: var(--muted);
+  margin: 9px 0 18px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.price {
+  font: 600 27px var(--serif);
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+.price small {
+  font: 14px var(--sans);
+  font-weight: 500;
+}
+.saving {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 500;
+  opacity: 0.85;
+}
+.included {
+  border-top: 0.5px solid var(--line);
+  margin-top: 18px;
+  padding-top: 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Section */
+.section-heading {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.section-heading small {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 8px;
+}
+.single-ticket-heading { text-align: center; margin-bottom: 18px; }
+.single-ticket-heading small { display: block; margin: 6px 0 0; }
+
+/* Ticket list */
+.ticket-list {
+  display: grid;
+  gap: 16px;
+}
+.village-list { margin-bottom: 18px; }
+.ticket-card {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  min-height: 158px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.ticket-card:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-lift);
+}
+.ticket-card img {
+  width: 140px;
+  height: 100%;
+  min-height: 158px;
+  object-fit: cover;
+  border-radius: 26px 0 0 26px;
+}
+.ticket-copy {
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+}
+.ticket-copy h3 {
+  font: 500 20px/1.25 var(--serif);
+  margin: 0 0 6px;
+  letter-spacing: 0.01em;
+}
+.ticket-copy p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 auto;
+  line-height: 1.4;
+}
+.ticket-copy .price-row {
+  margin-top: 16px;
+}
+.ticket-copy .price {
+  font-size: 21px;
+}
+.arrow {
+  color: var(--accent);
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* Detail page wrapper */
+.detail-wrapper {
+  width: 100%;
+  height: 100%;
+  max-width: 430px;
+  margin: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+/* Fixed hero topbar for detail page */
+.hero-topbar-fixed {
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + var(--device-status-height) + var(--navigation-top-gap));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 430px);
+  height: var(--navigation-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 100;
+  transition: all 0.2s ease;
+}
+.hero-topbar-fixed.on-white .hero-back,
+.hero-topbar-fixed.on-white .wx-capsule.hero-capsule {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.hero-topbar-fixed.on-white .hero-back svg,
+.hero-topbar-fixed.on-white .wx-capsule.hero-capsule svg {
+  color: var(--ink);
+}
+.hero-topbar-fixed.on-white .wx-capsule.hero-capsule .wx-divider {
+  background: oklch(85% 0.008 95);
+}
+.hero-back {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 0.5px solid rgba(255, 255, 255, 0.24);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.hero-back:active {
+  background: rgba(255, 255, 255, 0.20);
+}
+.hero-back svg {
+  color: #fff;
+}
+.wx-capsule.hero-capsule {
+  background: rgba(255, 255, 255, 0.14);
+  border: 0.5px solid rgba(255, 255, 255, 0.24);
+}
+.wx-capsule.hero-capsule svg {
+  color: #fff;
+  opacity: 0.9;
+}
+.wx-capsule.hero-capsule .wx-divider {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Detail main scrollable */
+.detail-main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.detail-main { padding-bottom: var(--checkout-safe-space); }
+.detail-main::-webkit-scrollbar {
+  width: 3px;
+}
+.detail-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+.detail-main::-webkit-scrollbar-thumb {
+  background: rgba(176, 156, 133, 0.2);
+  border-radius: 999px;
+}
+
+/* Hero - full bleed to top */
+.hero {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  isolation: isolate;
+  margin-bottom: -40px;
+}
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,0.14) 30%,
+    rgba(0,0,0,0.44) 100%
+  );
+  z-index: 1;
+}
+.hero-title {
+  position: absolute;
+  z-index: 2;
+  bottom: 48px;
+  left: 20px;
+  right: 20px;
+  color: #fff;
+}
+.hero-title h1 {
+  font: 500 32px/1.15 var(--serif);
+  margin: 0 0 6px;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.hero-title p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  line-height: 1.4;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.12);
+}
+
+/* Info card - lift effect */
+.info-card {
+  padding: 22px;
+  margin: 0 20px 18px;
+}
+.lift-card {
+  position: relative;
+  z-index: 2;
+  margin-top: 0;
+  border-radius: 32px;
+}
+.detail-price {
+  font: 600 30px var(--serif);
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+.detail-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 18px 0 8px;
+  font-weight: 500;
+}
+.detail-text {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  color: var(--ink);
+}
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.chip {
+  background: oklch(96% 0.004 90);
+  border: 0.5px solid var(--line);
+  border-radius: 20px;
+  padding: 6px 11px;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+/* Date options */
+.date-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.date-option {
+  border: 0.5px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 12px 4px;
+  text-align: center;
+  cursor: pointer;
+  min-height: 56px;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.date-option:active {
+  transform: scale(0.96);
+}
+.date-option.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: 0 0 0 0.5px var(--accent) inset;
+}
+.date-option strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.date-option span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+}
+.date-option.active span {
+  color: var(--accent);
+  opacity: 0.8;
+}
+.more-date {
+  margin-top: 12px;
+  width: 100%;
+  border: 0.5px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: var(--surface);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.15s ease;
+}
+.more-date:focus, .more-date.date-selected {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 0.5px var(--accent) inset;
+  background: var(--accent-soft);
+}
+.open-time {
+  margin-top: 20px;
+}
+
+/* Quantity */
+.quantity-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.quantity button {
+  width: 44px;
+  height: 44px;
+  border: 0.5px solid var(--line);
+  background: var(--surface);
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.quantity button:active {
+  transform: scale(0.94);
+  background: oklch(96% 0.004 90);
+}
+.quantity output {
+  min-width: 32px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+.quantity-note {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Form field */
+.field {
+  margin-top: 16px;
+}
+.field label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.field input {
+  width: 100%;
+  border: 0.5px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: var(--surface);
+  outline: none;
+  font-size: 15px;
+  transition: all 0.15s ease;
+}
+.field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 0.5px var(--accent) inset;
+}
+.error {
+  color: var(--accent);
+  font-size: 12px;
+  min-height: 18px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* Notice */
+.notice { margin: 20px 20px 0; }
+.notice summary {
+  padding: 18px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notice summary::after {
+  content: '›';
+  font-size: 18px;
+  color: var(--muted);
+  transform: rotate(90deg);
+  transition: transform 0.2s ease;
+}
+.notice[open] summary::after {
+  transform: rotate(270deg);
+}
+.notice p {
+  padding: 0 20px 20px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Checkout */
+.checkout {
+  position: fixed;
+  z-index: 50;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 430px);
+  padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+  background: rgba(255, 253, 249, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 0.5px solid rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06), 0 -1px 2px rgba(255,255,255,0.4) inset;
+}
+.checkout-total {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+.checkout-total strong {
+  display: block;
+  color: var(--accent);
+  font: 600 26px var(--serif);
+  margin-top: 2px;
+  letter-spacing: -0.01em;
+}
+.checkout-total span {
+  display: block;
+  margin-top: 2px;
+}
+.primary {
+  border: 0;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 22px;
+  padding: 13px 24px;
+  min-height: 46px;
+  min-width: 120px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.primary:active {
+  transform: scale(0.98);
+  background: oklch(48% 0.12 28);
+}
+
+/* Confirmation page */
+.confirm-wrapper { width:100%; height:100%; max-width:430px; margin:auto; position:relative; display:flex; flex-direction:column; background:radial-gradient(60% 80% at 50% 0%,oklch(98% 0.006 85) 0%,var(--bg) 60%); }
+.confirm-main { flex:1; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; padding:calc(env(safe-area-inset-top) + var(--device-status-height) + var(--navigation-top-gap) + var(--navigation-height) + 30px) 20px var(--checkout-safe-space); }
+.confirm-intro { text-align:center; margin-bottom:26px; }
+.confirm-intro h2 { font:500 28px/1.25 var(--serif); letter-spacing:.02em; margin:0 0 8px; }
+.confirm-intro p,.empty-order p { color:var(--muted); font-size:14px; margin:0; }
+.order-card { padding:8px 22px; }
+.order-row { display:flex; gap:20px; justify-content:space-between; align-items:baseline; padding:17px 0; border-bottom:.5px solid var(--line); }
+.order-row:last-child { border-bottom:0; }
+.order-label { color:var(--muted); font-size:14px; flex:0 0 auto; }
+.order-value { font-weight:500; font-size:15px; text-align:right; overflow-wrap:anywhere; }
+.confirm-actions { display:flex; align-items:center; gap:12px; }
+.secondary { border:0; background:oklch(95% 0.004 90); color:var(--ink); border-radius:22px; min-height:46px; padding:12px 18px; font-weight:600; cursor:pointer; }
+.empty-order { margin:auto 20px; padding:32px 24px; text-align:center; }
+.empty-order h2 { margin:0 0 10px; font:500 24px/1.3 var(--serif); }
+
+/* Bottom sheet */
+.bottom-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.bottom-sheet.active {
+  opacity: 1;
+}
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.sheet-content {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  margin: auto;
+  background: var(--paper);
+  border-radius: 26px 26px 0 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+.bottom-sheet.active .sheet-content {
+  transform: translateY(0);
+}
+.sheet-header {
+  padding: 24px 24px 18px;
+  border-bottom: 0.5px solid var(--line);
+}
+.sheet-header h3 {
+  margin: 0;
+  font: 500 20px/1.3 var(--serif);
+  letter-spacing: 0.01em;
+}
+.sheet-body {
+  padding: 20px 24px;
+}
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 0.5px solid var(--line);
+}
+.confirm-row:last-child {
+  border-bottom: none;
+}
+.confirm-row.total-row {
+  padding-top: 18px;
+  margin-top: 8px;
+  border-top: 0.5px solid var(--line);
+}
+.confirm-label {
+  font-size: 14px;
+  color: var(--muted);
+}
+.confirm-value {
+  font-size: 15px;
+  font-weight: 500;
+  text-align: right;
+}
+.confirm-value.accent {
+  color: var(--accent);
+  font: 600 22px var(--serif);
+  letter-spacing: -0.01em;
+}
+.sheet-actions {
+  padding: 20px 24px;
+  display: flex;
+  gap: 12px;
+}
+.sheet-btn {
+  flex: 1;
+  border: 0;
+  border-radius: 20px;
+  padding: 13px 20px;
+  min-height: 46px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.cancel-btn {
+  background: oklch(95% 0.004 90);
+  color: var(--ink);
+}
+.cancel-btn:active {
+  background: oklch(92% 0.006 90);
+}
+.confirm-btn {
+  background: var(--accent);
+  color: #fff;
+}
+.confirm-btn:active {
+  transform: scale(0.98);
+  background: oklch(48% 0.12 28);
+}
+
+/* Success modal */
+.success-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.success-modal.active {
+  opacity: 1;
+}
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  background: var(--paper);
+  border-radius: 24px;
+  padding: 32px 24px 24px;
+  text-align: center;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.18), 0 8px 16px rgba(0,0,0,0.12);
+  transform: scale(0.9);
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+}
+.success-modal.active .modal-content {
+  transform: scale(1);
+}
+.modal-icon {
+  margin: 0 auto 20px;
+  width: 56px;
+  height: 56px;
+}
+.modal-content h3 {
+  margin: 0 0 12px;
+  font: 500 20px/1.3 var(--serif);
+  letter-spacing: 0.01em;
+}
+.modal-content p {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.modal-btn {
+  width: min(180px, 100%);
+  border: 0;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 20px;
+  padding: 13px 20px;
+  min-height: 46px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.modal-btn:active {
+  transform: scale(0.98);
+  background: oklch(48% 0.12 28);
+}
+
+/* Responsive */
+@media (min-width: 700px) {
+  .select-wrapper,
+  .detail-wrapper {
+    margin: 24px auto;
+    height: calc(100vh - 48px);
+    border-radius: 36px;
+  }
+  .confirm-wrapper { margin:24px auto; height:calc(100vh - 48px); border-radius:36px; }
+  .checkout {
+    bottom: 24px;
+    border-radius: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+.hidden {
+  display: none !important;
+}
+</style>
+</head><body>
+  <noscript>请启用 JavaScript 查看门票页面。</noscript>
+  <script>
+function returnToPreviousPage(){if(parent!==window)parent.postMessage({type:'p06-back'},'*');else location.assign('P03_-V1.6-B2_Apple.html');}
+function ticketBack(target){if(history.state?.ticketParent===target) history.back();else location.replace('#'+target);}
+let ticketCurrent=location.hash.slice(1)||'select';
+window.addEventListener('hashchange',()=>{const next=location.hash.slice(1)||'select';if(!history.state?.ticketRoute)history.replaceState({ticketRoute:next,ticketParent:ticketCurrent},'');ticketCurrent=next;});
+const P06 = (() => {
+  const $ = (s, root = document) => root.querySelector(s);
+  const yuan = n => `¥${Number(n).toLocaleString('zh-CN')}`;
+  const priceLabel = n => (n === null || n === undefined) ? '价格待确认' : yuan(n);
+  const localDate = (offset = 0) => { const d = new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate()+offset); return d; };
+  const dateValue = d => [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
+  const dateLabel = d => `${d.getMonth()+1}月${d.getDate()}日`;
+
+  async function loadTickets() {
+    return [{"ticket_id":"xinye-five-pass","ticket_type":"pass","attraction_id":null,"name":"新叶古村通票","short_name":"古村通票","short_description":"一票探访五处代表性古建筑","cultural_label":"新叶古建群","price_yuan":60,"original_total_price_yuan":120,"saving_yuan":60,"recommended":true,"included_attractions":["有序堂","文昌阁","西山祠堂","双美堂","醉仙居"],"cover_image":"../assets/images/tickets/新叶古村通票_主卡片候选_01.jpg","validity_text":"购票后可进入所含五处建筑，具体有效规则待运营确认","entry_rule_text":"凭有效订单入场，具体核验方式待运营确认","booking_notice":"通票包含有序堂、文昌阁、西山祠堂、双美堂、醉仙居","refund_policy":"待运营确认","operation_status":"交互原型，待运营确认真实售票与核销流程"},{"ticket_id":"xinye-village-stroll","ticket_type":"village","attraction_id":null,"name":"新叶古村游览票","short_name":"古村游览票","short_description":"漫步南塘、古巷与村落公共空间","cultural_label":"","price_yuan":20,"original_total_price_yuan":null,"saving_yuan":0,"recommended":false,"included_attractions":[],"cover_image":"../assets/images/tickets/新叶古村游览票_门票卡片候选_01.jpg","object_position":"50% 45%","validity_text":"价格与开放规则待运营确认","entry_rule_text":"凭有效订单入场，具体核验方式待运营确认","booking_notice":"具体价格、开放时间与购票规则待运营确认","refund_policy":"待运营确认","operation_status":"交互原型，价格与实际售票流程待运营确认"},{"ticket_id":"youxu-hall","ticket_type":"single","attraction_id":"youxu-hall","name":"有序堂","short_name":"有序堂","short_description":"沿着堂屋与天井，认识家族空间","cultural_label":"宗族礼序","price_yuan":20,"original_total_price_yuan":null,"saving_yuan":0,"recommended":false,"included_attractions":["有序堂"],"cover_image":"../assets/images/tickets/有序堂_门票卡片候选_01.jpg","object_position":"50% 35%","validity_text":"单馆票有效规则待运营确认","entry_rule_text":"凭有效订单入场，具体核验方式待运营确认","booking_notice":"具体开放时间与购票规则待运营确认","refund_policy":"待运营确认","operation_status":"交互原型，待运营确认"},{"ticket_id":"wenchang-pavilion","ticket_type":"single","attraction_id":"wenchang-pavilion","name":"文昌阁","short_name":"文昌阁","short_description":"登阁远眺，读一座古村的文脉","cultural_label":"耕读文脉","price_yuan":20,"original_total_price_yuan":null,"saving_yuan":0,"recommended":false,"included_attractions":["文昌阁"],"cover_image":"../assets/images/tickets/文昌阁_门票卡片候选_01.jpg","object_position":"50% 45%","validity_text":"单馆票有效规则待运营确认","entry_rule_text":"凭有效订单入场，具体核验方式待运营确认","booking_notice":"具体开放时间与购票规则待运营确认","refund_policy":"待运营确认","operation_status":"交互原型，待运营确认"},{"ticket_id":"xishan-ancestral-hall","ticket_type":"single","attraction_id":"xishan-ancestral-hall","name":"西山祠堂","short_name":"西山祠堂","short_description":"从祠堂门庭，读村落共同的记忆","cultural_label":"祠堂记忆","price_yuan":20,"original_total_price_yuan":null,"saving_yuan":0,"recommended":false,"included_attractions":["西山祠堂"],"cover_image":"../assets/images/tickets/西山祠堂_门票卡片候选_01.jpg","object_position":"50% 42%","validity_text":"单馆票有效规则待运营确认","entry_rule_text":"凭有效订单入场，具体核验方式待运营确认","booking_notice":"具体开放时间与购票规则待运营确认","refund_policy":"待运营确认","operation_status":"交互原型，待运营确认"},{"ticket_id":"shuimei-hall","ticket_type":"single","attraction_id":"shuimei-hall","name":"双美堂","short_name":"双美堂","short_description":"看木构、院落与生活留下的尺度","cultural_label":"古居格局","price_yuan":20,"original_total_price_yuan":null,"saving_yuan":0,"recommended":false,"included_attractions":["双美堂"],"cover_image":"../assets/images/tickets/双美堂_门票卡片候选_01.jpg","object_position":"50% 38%","validity_text":"单馆票有效规则待运营确认","entry_rule_text":"凭有效订单入场，具体核验方式待运营确认","booking_notice":"具体开放时间与购票规则待运营确认","refund_policy":"待运营确认","operation_status":"交互原型，待运营确认"},{"ticket_id":"zuixian-residence","ticket_type":"single","attraction_id":"zuixian-residence","name":"醉仙居","short_name":"醉仙居","short_description":"在院落与檐影之间，感受古居日常","cultural_label":"院落人家","price_yuan":20,"original_total_price_yuan":null,"saving_yuan":0,"recommended":false,"included_attractions":["醉仙居"],"cover_image":"../assets/images/tickets/醉仙居_门票卡片候选_01.jpg","object_position":"50% 40%","validity_text":"单馆票有效规则待运营确认","entry_rule_text":"凭有效订单入场，具体核验方式待运营确认","booking_notice":"具体开放时间与购票规则待运营确认","refund_policy":"待运营确认","operation_status":"交互原型，待运营确认"}];
+  }
+
+  function selectPage(tickets) {
+    const pass = tickets.find(t => t.ticket_type === 'pass') || tickets[0];
+    const village = tickets.find(t => t.ticket_type === 'village');
+    const singles = tickets.filter(t => t.ticket_type === 'single');
+    const capsule = `<div class="wx-capsule"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="5" r="1.5" fill="currentColor"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="10" cy="15" r="1.5" fill="currentColor"/></svg><div class="wx-divider"></div><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></div>`;
+
+    document.body.innerHTML = `
+      <div class="select-wrapper">
+        <header class="topbar-fixed">
+          <button class="back" onclick="returnToPreviousPage()" aria-label="返回">‹</button>
+          <span class="topbar-spacer" aria-hidden="true"></span>
+          ${capsule}
+        </header>
+        <main class="select-main">
+          <section class="intro">
+            <h2>门票购买</h2>
+            <p>一票访全村，也可择一而行</p>
+          </section>
+          <a class="pass-card" href="#" onclick="event.preventDefault();location.hash='detail=${pass.ticket_id}'">
+            <img class="card-image" src="${pass.cover_image}" alt="${pass.name}" style="object-position:50% 45%">
+            <div class="pass-copy">
+              <div class="card-top">
+                <h3>${pass.name}</h3>
+                <span class="badge">推荐</span>
+              </div>
+              <p class="desc">${pass.short_description}</p>
+              <div class="price-row">
+                <span class="price"><small>¥</small>${pass.price_yuan}</span>
+                <span class="saving">比单独购买省 ¥${pass.saving_yuan}</span>
+              </div>
+              <div class="included">包含：${pass.included_attractions.join(' · ')}</div>
+            </div>
+          </a>
+          ${village ? `
+          <section>
+            <h2 class="section-heading single-ticket-heading">古村游览 <small>只游览村落公共空间时，可单独购买</small></h2>
+            <div class="ticket-list village-list">
+              <a class="ticket-card" href="#" onclick="event.preventDefault();location.hash='detail=${village.ticket_id}'">
+                <img src="${village.cover_image}" alt="${village.name}" style="object-position:${village.object_position||'50% 40%'}">
+                <div class="ticket-copy">
+                  <h3>${village.name}</h3>
+                  <p>${village.short_description}</p>
+                  <div class="price-row">
+                    <span class="price"><small>¥</small>${village.price_yuan}</span>
+                    <span class="arrow">查看详情 ›</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </section>
+          ` : ''}
+          <section>
+            <h2 class="section-heading single-ticket-heading">单馆参观 <small>只参观一处建筑时，可单独购买</small></h2>
+            <div class="ticket-list">
+              ${singles.map(t => `
+                <a class="ticket-card" href="#" onclick="event.preventDefault();location.hash='detail=${t.ticket_id}'">
+                  <img src="${t.cover_image}" alt="${t.name}" style="object-position:${t.object_position||'50% 40%'}">
+                  <div class="ticket-copy">
+                    <h3>${t.name}</h3>
+                    <p>${t.cultural_label} · ${t.short_description}</p>
+                    <div class="price-row">
+                      <span class="price"><small>¥</small>${t.price_yuan}</span>
+                      <span class="arrow">查看详情 ›</span>
+                    </div>
+                  </div>
+                </a>
+              `).join('')}
+            </div>
+          </section>
+        </main>
+      </div>
+    `;
+
+    // Scroll effect for topbar
+    const topbar = $('.topbar-fixed');
+    const main = $('.select-main');
+    if (topbar && main) {
+      main.addEventListener('scroll', () => {
+        if (main.scrollTop > 10) {
+          topbar.classList.add('scrolled');
+        } else {
+          topbar.classList.remove('scrolled');
+        }
+      });
+    }
+  }
+
+  function detailPage(tickets, ticket) {
+    const priceReady = ticket.price_yuan !== null && ticket.price_yuan !== undefined;
+    let draft; try { draft=JSON.parse(sessionStorage.getItem('p06_pending_order')||'null'); } catch (_) { draft=null; }
+    const hasDraft = draft && draft.ticket_id === ticket.ticket_id && Number.isInteger(draft.quantity) && draft.quantity >= 1 && draft.quantity <= 20;
+    let quantity = hasDraft ? draft.quantity : 1;
+    let selectedDate = hasDraft && /^\d{4}-\d{2}-\d{2}$/.test(draft.visit_date||'') ? draft.visit_date : dateValue(localDate());
+    const capsule = `<div class="wx-capsule hero-capsule"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="5" r="1.5" fill="currentColor"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="10" cy="15" r="1.5" fill="currentColor"/></svg><div class="wx-divider"></div><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></div>`;
+    const dates = [0,1,2].map(i => { const d=localDate(i); return `<button class="date-option ${i===0?'active':''}" data-date="${dateValue(d)}"><strong>${i===0?'今天':i===1?'明天':'后天'}</strong><span>${dateLabel(d)}</span></button>`; }).join('');
+
+    document.body.innerHTML = `
+      <div class="detail-wrapper">
+        <header class="hero-topbar-fixed">
+          <button class="hero-back" onclick="ticketBack('select')" aria-label="返回">
+            <svg width="10" height="17" viewBox="0 0 10 17" fill="none">
+              <path d="M9 1L1 8.5L9 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <span></span>
+          ${capsule}
+        </header>
+        <main class="detail-main">
+          <section class="hero">
+            <img src="${ticket.cover_image}" alt="${ticket.name}" style="object-position:${ticket.object_position||'50% 40%'}">
+            <div class="hero-title">
+              <h1>${ticket.name}</h1>
+              <p>${ticket.short_description}</p>
+            </div>
+          </section>
+          <section class="info-card lift-card">
+            <div class="detail-price">${priceReady ? `${yuan(ticket.price_yuan)} <small> / 张</small>` : priceLabel(ticket.price_yuan)}</div>
+            <div class="detail-label">票种说明</div>
+            <p class="detail-text">${ticket.short_description}</p>
+            ${ticket.included_attractions.length ? `
+            <div class="detail-label">包含景点</div>
+            <div class="chips">${ticket.included_attractions.map(x=>`<span class="chip">${x}</span>`).join('')}</div>
+            ` : ''}
+            <div class="detail-label">${ticket.recommended ? `推荐 · 可节省 ${yuan(ticket.saving_yuan)}` : (ticket.ticket_type === 'village' ? '单独购票' : '单馆参观')}</div>
+          </section>
+          <section class="info-card">
+            <h2 class="section-heading">选择日期</h2>
+            <div class="date-options">${dates}</div>
+            <input class="more-date" id="more-date" type="date" min="${dateValue(localDate())}" aria-label="选择更多日期">
+            <p class="detail-label open-time">开放时段内均可入场</p>
+            <p class="detail-label">具体开放时间待运营确认</p>
+          </section>
+          <section class="info-card">
+            <h2 class="section-heading">购票数量</h2>
+            <div class="quantity-row">
+              <div class="quantity">
+                <button id="minus" aria-label="减少数量">−</button>
+                <output id="quantity">1</output>
+                <button id="plus" aria-label="增加数量">＋</button>
+              </div>
+              <span class="quantity-note">暂定最多 20 张</span>
+            </div>
+            <div class="field">
+              <label for="contact-name">联系人姓名</label>
+              <input id="contact-name" autocomplete="name" placeholder="请输入联系人姓名">
+              <div class="error" id="name-error"></div>
+            </div>
+            <div class="field">
+              <label for="contact-phone">手机号码</label>
+              <input id="contact-phone" autocomplete="tel" inputmode="tel" placeholder="请输入手机号码">
+              <div class="error" id="phone-error"></div>
+            </div>
+          </section>
+          <details class="notice">
+            <summary>购票须知</summary>
+            <p>${ticket.booking_notice}<br>${ticket.validity_text}<br>${ticket.entry_rule_text}<br>退款政策：${ticket.refund_policy}<br><br>${ticket.operation_status}</p>
+          </details>
+        </main>
+        <footer class="checkout">
+          <div class="checkout-total">
+            合计金额
+            <strong id="total">${priceReady ? yuan(ticket.price_yuan) : priceLabel(ticket.price_yuan)}</strong>
+            <span id="count">共 1 张</span>
+          </div>
+          <button class="primary" id="submit" ${priceReady ? '' : 'disabled'} style="${priceReady ? '' : 'opacity:0.5;cursor:not-allowed;'}">提交订单</button>
+        </footer>
+      </div>
+    `;
+
+    const update = () => {
+      $('#quantity').textContent=quantity;
+      $('#total').textContent=priceReady ? yuan(ticket.price_yuan*quantity) : priceLabel(ticket.price_yuan);
+      $('#count').textContent=`共 ${quantity} 张`;
+    };
+    if (hasDraft) {
+      $('#contact-name').value=draft.contact_name||'';
+      $('#contact-phone').value=draft.contact_phone||'';
+      const matchingDate=[...document.querySelectorAll('.date-option')].find(x=>x.dataset.date===selectedDate);
+      if (matchingDate) { document.querySelectorAll('.date-option').forEach(x=>x.classList.toggle('active',x===matchingDate)); }
+      else { $('#more-date').value=selectedDate; $('#more-date').classList.add('date-selected'); }
+      update();
+    }
+
+    $('#minus').onclick=()=>{quantity=Math.max(1,quantity-1);update()};
+    $('#plus').onclick=()=>{quantity=Math.min(20,quantity+1);update()};
+
+    document.querySelectorAll('.date-option').forEach(b=>b.onclick=()=>{
+      document.querySelectorAll('.date-option').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      selectedDate=b.dataset.date;
+    });
+
+    $('#more-date').onchange=e=>{
+      selectedDate=e.target.value;
+      document.querySelectorAll('.date-option').forEach(x=>x.classList.remove('active'));
+      const input = $('#more-date');
+      input.classList.add('date-selected');
+    };
+
+    $('#submit').onclick=()=>{
+      if(!priceReady){return;}
+      const name=$('#contact-name').value.trim(), phone=$('#contact-phone').value.trim();
+      $('#name-error').textContent=name?'':'请填写联系人姓名';
+      $('#phone-error').textContent=/^[+\d][\d\s-]{5,24}$/.test(phone)?'':'请填写有效的手机号码';
+      if(!selectedDate){return;}
+      if(name && /^[+\d][\d\s-]{5,24}$/.test(phone)) {
+        sessionStorage.setItem('p06_pending_order', JSON.stringify({ ticket_id:ticket.ticket_id, ticket_name:ticket.name, quantity, contact_name:name, contact_phone:phone, total_yuan:ticket.price_yuan*quantity, visit_date:selectedDate }));
+        location.hash='confirm';
+      }
+    };
+
+    // Scroll effect for hero topbar
+    const heroTopbar = $('.hero-topbar-fixed');
+    const detailMain = $('.detail-main');
+    if (heroTopbar && detailMain) {
+      detailMain.addEventListener('scroll', () => {
+        if (detailMain.scrollTop > 300) {
+          heroTopbar.classList.add('on-white');
+        } else {
+          heroTopbar.classList.remove('on-white');
+        }
+      });
+    }
+    requestAnimationFrame(() => document.documentElement.style.setProperty('--checkout-height', `${$('.checkout').getBoundingClientRect().height}px`));
+  }
+
+  function confirmationPage() {
+    let order; try { order=JSON.parse(sessionStorage.getItem('p06_pending_order')||'null'); } catch (_) { order=null; }
+    const valid=order && typeof order.ticket_id==='string' && typeof order.ticket_name==='string' && Number.isInteger(order.quantity) && order.quantity>=1 && order.quantity<=20 && typeof order.contact_name==='string' && order.contact_name.trim() && typeof order.contact_phone==='string' && order.contact_phone.trim() && Number.isFinite(Number(order.total_yuan));
+    const capsule=`<div class="wx-capsule"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="5" r="1.5" fill="currentColor"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="10" cy="15" r="1.5" fill="currentColor"/></svg><div class="wx-divider"></div><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></div>`;
+    const back=()=>ticketBack(valid?`detail=${encodeURIComponent(order.ticket_id)}`:'select');
+    document.body.innerHTML=valid?`<div class="confirm-wrapper"><header class="topbar-fixed"><button class="back" aria-label="返回修改">‹</button><span class="topbar-spacer" aria-hidden="true"></span>${capsule}</header><main class="confirm-main"><section class="confirm-intro"><h2>确认购票信息</h2><p>请核对以下信息后提交</p></section><section class="info-card order-card"><div class="order-row"><span class="order-label">门票</span><span class="order-value">${order.ticket_name}</span></div><div class="order-row"><span class="order-label">数量</span><span class="order-value">${order.quantity} 张</span></div><div class="order-row"><span class="order-label">姓名</span><span class="order-value">${order.contact_name}</span></div><div class="order-row"><span class="order-label">电话</span><span class="order-value">${order.contact_phone}</span></div></section></main><footer class="checkout"><div class="checkout-total">合计金额<strong>${yuan(order.total_yuan)}</strong></div><div class="confirm-actions"><button class="secondary" id="edit-order">返回修改</button><button class="primary" id="confirm-order">确认提交</button></div></footer></div>`:`<div class="confirm-wrapper"><header class="topbar-fixed"><button class="back" aria-label="返回门票选择">‹</button><span class="topbar-spacer" aria-hidden="true"></span>${capsule}</header><main class="confirm-main"><section class="info-card empty-order"><h2>暂无待确认的订单信息</h2><p>请从门票详情页填写信息后继续。</p><button class="primary" id="return-select" style="margin-top:24px">返回门票选择</button></section></main></div>`;
+    $('.back').onclick=back;
+    if(!valid){ $('#return-select').onclick=()=>location.hash='select'; return; }
+    $('#edit-order').onclick=back;
+    $('#confirm-order').onclick=()=>showSuccessModal(()=>{sessionStorage.removeItem('p06_pending_order');location.hash='select';});
+    requestAnimationFrame(()=>{ const checkout=$('.checkout'); if(checkout) document.documentElement.style.setProperty('--checkout-height',`${checkout.getBoundingClientRect().height}px`); });
+  }
+
+  function showConfirmSheet(ticket, quantity, date, name, phone) {
+    const maskPhone = phone.replace(/(\d{3})\d+(\d{4})/, '$1****$2');
+    const dateObj = new Date(date);
+    const displayDate = `${dateObj.getFullYear()}年${dateObj.getMonth()+1}月${dateObj.getDate()}日`;
+
+    const sheet = document.createElement('div');
+    sheet.className = 'bottom-sheet';
+    sheet.innerHTML = `
+      <div class="sheet-backdrop"></div>
+      <div class="sheet-content">
+        <div class="sheet-header">
+          <h3>确认预约信息</h3>
+        </div>
+        <div class="sheet-body">
+          <div class="confirm-row">
+            <span class="confirm-label">票种</span>
+            <span class="confirm-value">${ticket.name}</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-label">参观日期</span>
+            <span class="confirm-value">${displayDate}</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-label">购票数量</span>
+            <span class="confirm-value">${quantity} 张</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-label">联系人</span>
+            <span class="confirm-value">${name}</span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-label">手机号码</span>
+            <span class="confirm-value">${maskPhone}</span>
+          </div>
+          <div class="confirm-row total-row">
+            <span class="confirm-label">合计金额</span>
+            <span class="confirm-value accent">${yuan(ticket.price_yuan * quantity)}</span>
+          </div>
+        </div>
+        <div class="sheet-actions">
+          <button class="sheet-btn cancel-btn">取消</button>
+          <button class="sheet-btn confirm-btn">确认提交</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(sheet);
+    setTimeout(() => sheet.classList.add('active'), 10);
+
+    const closeSheet = () => {
+      sheet.classList.remove('active');
+      setTimeout(() => sheet.remove(), 250);
+    };
+
+    sheet.querySelector('.sheet-backdrop').onclick = closeSheet;
+    sheet.querySelector('.cancel-btn').onclick = closeSheet;
+    sheet.querySelector('.confirm-btn').onclick = () => {
+      closeSheet();
+      setTimeout(() => showSuccessModal(), 300);
+    };
+  }
+
+  function showSuccessModal(onComplete) {
+    const modal = document.createElement('div');
+    modal.className = 'success-modal';
+    modal.innerHTML = `
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <div class="modal-icon">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="27" stroke="var(--accent)" stroke-width="2"/>
+            <path d="M16 28L24 36L40 20" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>信息已确认</h3>
+        <button class="modal-btn">完成</button>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('active'), 10);
+
+    const close=()=>{
+      modal.classList.remove('active');
+      setTimeout(()=>{modal.remove();if(onComplete)onComplete();},250);
+    };
+    modal.querySelector('.modal-btn').onclick=close;
+    modal.querySelector('.modal-backdrop').onclick=close;
+  }
+
+  async function start() {
+    try {
+      const tickets=await loadTickets();
+      const route=decodeURIComponent(location.hash.slice(1));
+      if(route === 'confirm') { confirmationPage(); return; }
+      const id=route.startsWith('detail=') ? route.slice(7) : null;
+      if(id){
+        const ticket=tickets.find(t=>t.ticket_id===id)||tickets[0];
+        detailPage(tickets,ticket);
+      } else {
+        selectPage(tickets);
+      }
+    } catch(e) {
+      document.body.innerHTML=`<div class="select-wrapper"><main class="select-main"><p class="intro">${e.message}。请通过本目录的本地服务器打开页面。</p></main></div>`;
+    }
+  }
+
+  window.addEventListener('hashchange', start);
+  return { start };
+})();
+</script>
+  <script>
+  const syncMasterTitle = () => {
+    const route = decodeURIComponent(location.hash.slice(1));
+    const label = route === 'confirm' ? 'P06 确认订单' : route.startsWith('detail=') ? 'P06 门票详情' : 'P06 门票预约';
+    parent.postMessage({type:'p06-title', label, route:location.hash}, '*');
+  };
+  window.addEventListener('hashchange', syncMasterTitle);
+  syncMasterTitle();
+P06.start();</script>
+</body></html>

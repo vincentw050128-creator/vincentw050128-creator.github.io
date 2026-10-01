@@ -1,0 +1,53 @@
+/* 仅适配展示容器，不覆盖页面内容配色、字体或图片裁切。 */
+html,body{background:radial-gradient(60% 80% at 50% 0%,oklch(98% 0.006 85) 0%,oklch(98% 0.004 95) 60%)}
+.device.unified-device > .screen {position:relative;width:100%;height:100%;overflow:hidden;box-sizing:border-box}
+.unified-device > .unified-island { position:absolute;z-index:90;top:22px;left:50%;translate:-50%;width:124px;height:36px;border-radius:99px;background:#000;pointer-events:none; }
+.unified-device > .unified-rail { position:absolute;width:4px;border-radius:3px;background:#09090b; }
+.unified-device .splash-content {padding-left:22px;padding-right:22px}
+.unified-rail.r1 {left:-3px;top:174px;height:32px}.unified-rail.r2{left:-3px;top:220px;height:60px}.unified-rail.r3{left:-3px;top:290px;height:60px}.unified-rail.r4{right:-3px;top:250px;height:100px}
+.site-status{position:absolute;z-index:89;top:0;left:0;right:0;height:47px;padding:18px 26px 0;box-sizing:border-box;display:flex;align-items:flex-start;justify-content:space-between;pointer-events:none;color:#fff;font:600 15px/21px -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;letter-spacing:-.01em;filter:drop-shadow(0 1px 1px #0009)}
+.site-status .site-time{font-family:ui-monospace,'SF Mono',Menlo,monospace}
+.site-status .site-signals{display:inline-flex;align-items:center;gap:6px;height:21px}
+.site-status svg{display:block;width:17px;height:11px;fill:currentColor;flex-shrink:0}
+.site-status svg.site-battery{width:25px}
+/* 首页基准：59px 导航栏 + 28px 底部手势区域。 */
+body[data-unified-tabs] .screen > .tabbar { height:59px;min-height:59px;box-sizing:border-box;padding:6px 0 2px;border-top-width:1px; }
+body[data-unified-tabs] .screen > .tabbar .tab { height:50px;min-height:0;padding:6px 0 4px;gap:2px;font-size:10px;line-height:14px;box-sizing:border-box; }
+body[data-unified-tabs] .screen > .tabbar .tab svg {width:24px;height:24px;flex-shrink:0}
+body[data-unified-tabs] .screen > .tabbar:has(+ .home) {bottom:28px}
+body[data-unified-tabs] .screen:has(> .home) > .content {bottom:87px}
+body[data-unified-tabs] .screen:has(> .home) > .map,body[data-unified-tabs] .screen:has(> .home) > .sheet {bottom:87px}
+body[data-unified-tabs] .screen:has(> .home) > .list-button {bottom:103px}
+body[data-unified-tabs] .screen > .home {bottom:8px}
+[data-nav], [data-pending] { cursor: pointer; }
+[role="button"]:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.xinye-notice { position:absolute; z-index:200; bottom:110px; left:50%; transform:translateX(-50%); max-width:85%; width:max-content; padding:10px 16px; border-radius:14px; color:white; background:rgba(25,25,25,.88); font-size:13px; opacity:0; pointer-events:none; transition:opacity .15s; }
+.xinye-notice.show { opacity:1; }
+@media (min-width:761px) {
+  html,body {margin:0;width:100%;height:100dvh;min-height:100dvh;box-sizing:border-box;overflow:hidden;background:radial-gradient(60% 80% at 50% 0%,oklch(98% 0.006 85) 0%,oklch(98% 0.004 95) 60%);}
+  body {display:grid;place-items:center;padding:16px;}
+  body > .stage {position:relative;display:block;width:390px;height:884.8px;min-height:0;max-width:none;flex-shrink:0;padding:0;margin:0;}
+  .stage > .site-caption {position:absolute;top:0;left:50%;transform:translateX(-50%);margin:0;padding:0;height:16.8px;line-height:16.8px;font:12px/16.8px ui-monospace,'SF Mono',Menlo,monospace;color:oklch(48% 0.012 70);letter-spacing:.08em;white-space:nowrap;text-align:center;}
+  .stage > .site-caption strong{color:inherit;font-weight:500}
+  .stage > .device.unified-device {position:absolute!important;top:40.8px;left:0;margin:0;box-sizing:border-box;}
+  .device.unified-device {position:relative;width:390px;height:844px;max-width:none;aspect-ratio:auto;padding:12px;border-radius:56px;background:linear-gradient(160deg,#2a2a2c 0%,#1a1a1c 50%,#0e0e10 100%);box-shadow:inset 0 0 0 1px #ffffff0a,inset 0 0 0 2px #000,0 28px 60px -12px #0007,0 8px 20px -8px #0006;}
+  .unified-device > .screen {border-radius:44px;box-shadow:none}
+  .device.unified-device::before,.device.unified-device::after {content:"";position:absolute;top:100px;bottom:100px;width:3px;background:linear-gradient(transparent,#ffffff18 12%,transparent 22%,transparent 78%,#ffffff12 90%,transparent)}
+  .device.unified-device::before {left:-1px}.device.unified-device::after {right:-1px}
+}
+@media (max-width:760px) {
+  html,body { width:100%; height:100%; min-height:100%; margin:0; padding:0; overflow:hidden; }
+  .stage { width:100%; height:100dvh; min-height:0; gap:0; display:block; }
+  .caption,.p05-stage-label { display:none; }
+  .device,.device.p05-apple-device {
+    width:100%; max-width:none; height:100dvh; max-height:none; aspect-ratio:auto;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    border-radius:0; box-shadow:none;
+  }
+  .device::before,.device::after,.rail,.btn-rail,.p05-rail { display:none; }
+  .screen,.p05-apple-device > .screen { width:100%; height:100%; border-radius:0; }
+  .island,.p05-island { top:calc(10px + env(safe-area-inset-top)); }
+  .unified-device > .unified-island {top:calc(10px + env(safe-area-inset-top))}
+  .unified-rail {display:none}
+  .content,.p05-scroll-content { overscroll-behavior-y:contain; }
+}

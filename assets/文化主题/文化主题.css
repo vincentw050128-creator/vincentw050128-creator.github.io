@@ -1,0 +1,97 @@
+/* 文化详情页专属样式；机框、状态栏及缩放由项目公共样式管理。 */
+.culture-page{--ink:#252923;--green:#385b50;--muted:#85877e;--paper:#fffefa;color:var(--ink);font:14px/1.8 -apple-system,BlinkMacSystemFont,'Microsoft YaHei','PingFang SC',sans-serif;margin:0}
+.culture-page *{box-sizing:border-box}
+.culture-page button,.culture-page a{-webkit-tap-highlight-color:transparent}
+.culture-page button{font:inherit;cursor:pointer}
+.culture-page a{color:inherit;text-decoration:none}
+.culture-page button:focus-visible,.culture-page a:focus-visible{outline:2px solid #6d927c;outline-offset:4px}
+.culture-page .device{width:390px;height:844px;position:relative;padding:12px;border-radius:56px;background:#161718}
+.culture-page .screen{position:relative;height:100%;overflow:hidden;border-radius:44px;background:var(--paper)}
+.culture-page .content{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;overscroll-behavior:contain}
+.culture-page .content::-webkit-scrollbar{display:none}
+.culture-page .culture-topbar{position:absolute;inset:0 0 auto;height:104px;z-index:40;pointer-events:none;transition:background .2s}
+.culture-page .culture-topbar.scrolled{background:rgba(255,254,250,.96);box-shadow:0 1px 0 #36584912}
+.culture-page .top-actions{display:flex;align-items:center;justify-content:space-between;position:absolute;top:55px;left:18px;right:18px;height:38px;gap:12px}
+.culture-page .round-button{border:0;background:#ffffffd9;border-radius:50%;width:38px;height:38px;display:grid;place-items:center;flex:none;pointer-events:auto;color:#354d44}
+.culture-page svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;flex-shrink:0}
+.culture-page .top-title{font-size:13px;letter-spacing:.12em;color:var(--green);opacity:0;transition:opacity .2s}
+.culture-page .scrolled .top-title{opacity:1}
+.culture-page .screen.reading .site-status{color:var(--green);filter:none}
+.culture-page .hero{height:410px;position:relative;color:white;isolation:isolate}
+.culture-page .hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:42% 50%;z-index:-2}
+.culture-page .hero::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(11,29,20,.55),rgba(11,29,20,.05) 88%),linear-gradient(0deg,rgba(10,24,16,.3),transparent 70%)}
+.culture-page[data-theme="reading"] .hero-photo{object-position:48% 50%}
+.culture-page .hero-copy{position:absolute;left:22px;right:20px;top:125px;text-shadow:0 1px 8px #14291c40}
+.culture-page .eyebrow{margin:0 0 10px;font-size:12px;letter-spacing:.18em}
+.culture-page h1,.culture-page h2,.culture-page h3,.culture-page .serif{font-family:'Songti SC','STSong','SimSun',Georgia,serif;font-weight:400}
+.culture-page h1{font-size:39px;font-weight:600;line-height:1.22;letter-spacing:.04em;margin:0 0 12px}
+.culture-page .hero-subtitle{font-size:18px;margin:0 0 9px;line-height:1.5}
+.culture-page .hero-summary{font-size:12px;line-height:1.8;max-width:255px;margin:0;color:#fffffff2;letter-spacing:.02em}
+.culture-page .photo-note{position:absolute;right:21px;bottom:38px;font-size:10px;letter-spacing:.13em;color:#ffffffdf}
+.culture-page .paper{position:relative;margin-top:-30px;border-radius:30px 30px 0 0;background:var(--paper);padding:15px 19px 38px}
+.culture-page .facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:0 0 18px}
+.culture-page .fact{min-width:0;min-height:86px;background:#f4f3ef;border-radius:12px;text-align:center;padding:10px 2px 8px;color:var(--green)}
+.culture-page .fact svg{width:20px;height:20px;display:block;margin:0 auto 6px}
+.culture-page .fact strong{font-size:10px;line-height:13px;min-height:26px;font-weight:500;display:block;word-break:keep-all}
+.culture-page .fact span{display:block;font-size:10px;line-height:14px;color:#84877e;margin-top:2px}
+.culture-page .chapter{scroll-margin-top:111px;margin:0 0 31px}
+.culture-page .section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.culture-page .section-number{font:11px/1.5 ui-monospace,monospace;color:#8a8f85;display:block;margin-bottom:3px}
+.culture-page h2{font-size:28px;font-weight:600;line-height:1.4;margin:0;letter-spacing:.015em}
+.culture-page .aside-quote{font-family:'Songti SC','SimSun',serif;color:var(--green);font-size:11px;line-height:1.9;text-align:right;margin:12px 0 0;white-space:nowrap}
+.culture-page .chapter p{color:#666a60;font-size:13px;line-height:1.8;margin:0 0 15px;text-align:justify}
+.culture-page #origin p{line-height:1.65;margin-bottom:12px}
+.culture-page .gallery-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.culture-page figure{margin:0;min-width:0}
+.culture-page .photo-button{border:0;padding:0;background:none;display:block;width:100%;border-radius:9px;overflow:hidden}
+.culture-page .photo-button img{display:block;width:100%;height:70px;object-fit:cover;transition:transform .25s}
+.culture-page .photo-button:hover img{transform:scale(1.035)}
+.culture-page figcaption{font-size:10px;text-align:center;color:#888b82;margin-top:5px;line-height:1.6}
+.culture-page .action-card{display:flex;align-items:center;gap:10px;background:#e8eeE8;border:0;border-radius:13px;padding:15px 17px;color:var(--green);width:100%;text-align:left;line-height:1.6}
+.culture-page .action-card strong{font-size:14px;font-weight:500;line-height:1.6;letter-spacing:.06em}
+.culture-page .action-card small{display:block;font-size:10px;color:#7b8f82}
+.culture-page .action-card .arrow{margin-left:auto;transform:rotate(180deg);width:19px}
+.culture-page .chapter-links{display:flex;justify-content:space-between;border-top:1px solid #e7e9e1;border-bottom:1px solid #e7e9e1;padding:11px 0;margin:24px 0 27px;gap:4px}
+.culture-page .chapter-links a{font-size:11px;color:var(--green);padding:3px 0}
+.culture-page .steps{list-style:none;margin:3px 0 0;padding:0}
+.culture-page .steps li{position:relative;margin-left:10px;padding:0 0 23px 25px;border-left:1px solid #d6ded3}
+.culture-page .steps li:last-child{border-left-color:transparent;padding-bottom:0}
+.culture-page .step-index{position:absolute;left:-11px;top:3px;display:grid;place-items:center;width:21px;height:21px;background:#e8eee5;border-radius:50%;font:10px ui-monospace,monospace;color:#55715e}
+.culture-page h3{font-size:19px;line-height:1.5;margin:0 0 7px}
+.culture-page .steps p{font-size:12px;margin-bottom:0}
+.culture-page .feature-photo{margin:20px 0 17px}
+.culture-page .feature-photo img{height:auto;aspect-ratio:1.6;object-fit:cover}
+.culture-page .feature-photo figcaption{text-align:left;letter-spacing:.04em}
+.culture-page .text-card{padding:18px;background:#f5f4ef;border-radius:14px;margin-bottom:10px}
+.culture-page .text-card p{font-size:12px;margin:0}
+.culture-page .text-card .overline{font-size:10px;letter-spacing:.13em;color:#869281;display:block;margin-bottom:6px}
+.culture-page .place-list{border-top:1px solid #e8e9e1;margin:8px 0 20px}
+.culture-page .place-link{display:flex;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid #e8e9e1}
+.culture-page .place-link>span{flex:1}
+.culture-page .place-link strong{font-size:14px;font-weight:500;color:#3a5146}
+.culture-page .place-link small{display:block;color:#858a80;font-size:11px;margin-top:3px}
+.culture-page .place-link svg{transform:rotate(180deg);width:18px;color:#718775}
+.culture-page .time{display:block;color:#6c806c;font:12px/1.5 ui-monospace,monospace;letter-spacing:.04em;margin-bottom:6px}
+.culture-page .closing-quote{padding:24px 8px;text-align:center;font:22px/1.8 'Songti SC','SimSun',serif;color:#476552;letter-spacing:.08em}
+.culture-page .related{margin-top:24px;padding-top:20px;border-top:1px solid #e7e9e1}
+.culture-page .related-label{font-size:10px;letter-spacing:.16em;color:#8b9185;margin-bottom:11px}
+.culture-page .related-link{display:flex;align-items:center;gap:15px}
+.culture-page .related-link img{width:85px;height:68px;border-radius:10px;object-fit:cover}
+.culture-page .related-link strong{font:19px/1.5 'Songti SC','SimSun',serif;color:#334e40;display:block}
+.culture-page .related-link small{font-size:11px;color:#878d81}
+.culture-page .related-link .arrow{transform:rotate(180deg);margin-left:auto;width:18px}
+.culture-page .endnote{text-align:center;font-size:10px;color:#969a90;letter-spacing:.1em;margin:30px 0 0}
+.culture-page .home-indicator{position:absolute;pointer-events:none;z-index:45;bottom:8px;left:50%;transform:translateX(-50%);width:112px;height:4px;border-radius:5px;background:#1c211dcc}
+.culture-page .viewer{position:absolute;inset:0;z-index:110;background:#132018f5;color:#fff;display:flex;flex-direction:column;padding:55px 16px 30px}
+.culture-page .viewer[hidden],.culture-page .chapter-menu[hidden]{display:none}
+.culture-page .viewer-head{display:flex;justify-content:space-between;align-items:center;font-size:12px;gap:12px;min-height:40px}
+.culture-page .viewer button{border:1px solid #ffffff50;color:inherit;border-radius:22px;background:transparent;padding:8px 16px;min-height:40px}
+.culture-page .viewer figure{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;flex-direction:column;gap:14px;margin:20px 0}
+.culture-page .viewer img{width:100%;height:100%;min-height:0;object-fit:contain}
+.culture-page .viewer figcaption{color:#e4e8df;font-size:12px}
+.culture-page .viewer-controls{display:flex;justify-content:center;gap:18px}
+.culture-page .chapter-menu{position:absolute;z-index:60;top:101px;left:18px;right:18px;background:var(--paper);border:1px solid #e3e7df;border-radius:15px;box-shadow:0 12px 35px #1a2d2330;padding:14px 17px}
+.culture-page .chapter-menu a{display:block;padding:10px 2px;color:var(--green);font-size:13px}
+.culture-page .content.locked{overflow:hidden}
+@media(max-width:760px){.culture-page .stage{width:100%;height:100dvh}.culture-page .device{width:100%;height:100dvh;border-radius:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}.culture-page .screen{border-radius:0}.culture-page .paper{padding-left:20px;padding-right:20px}.culture-page .hero{height:410px}}
+@media(prefers-reduced-motion:reduce){.culture-page *{transition:none!important;scroll-behavior:auto!important}}

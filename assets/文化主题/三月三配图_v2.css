@@ -1,0 +1,5 @@
+/* 仅用于三月三页新增的图文，沿用现行版式，保留照片完整比例。 */
+.culture-page[data-theme="festival"] .documentary-photo img{aspect-ratio:auto;height:auto}
+.culture-page[data-theme="festival"] .place-entry{border-bottom:1px solid #e8e9e1}
+.culture-page[data-theme="festival"] .place-entry .place-link{border-bottom:0;padding-bottom:8px}
+.culture-page[data-theme="festival"] .place-entry .place-photo{margin:5px 0 19px}

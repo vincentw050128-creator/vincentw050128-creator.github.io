@@ -1,0 +1,26 @@
+/* 原图文字即入口，不叠加第二套地名。 */
+.screen{--map-card-height:250px}
+.map-point,.tower-hotspot{position:absolute;translate:-50% -50%;border:0;padding:0;min-width:0;min-height:18px;border-radius:4px;background:transparent!important;box-shadow:none!important;color:transparent;cursor:pointer}
+.map-point:after,.tower-hotspot:after{display:none}
+.map-point:focus-visible{outline:2px solid white;outline-offset:2px}
+.screen .sheet{top:auto!important;height:var(--map-card-height);bottom:87px!important;padding:0}
+.sheet .card-body{position:absolute;inset:27px 20px 56px;overflow:auto;scrollbar-width:thin}
+.sheet .card-body .tower{right:2px;top:12px}
+/* 原配图是截图裁片：仅遮去顶部残留地图线和右上角旧“路线”按钮。 */
+.sheet:not(.generic-card) .tower{clip-path:polygon(0 4%,61% 4%,61% 26%,100% 26%,100% 100%,0 100%)}
+.sheet .card-body .desc{position:absolute;bottom:0;margin-bottom:0;padding-bottom:0}
+.sheet.generic-card .card-body .tower{width:90px;height:115px;object-position:center;mix-blend-mode:normal;filter:none;border-radius:12px;top:38px}
+.sheet.generic-card .desc{font-size:11px;line-height:1.65;width:calc(100% - 104px)}
+.sheet.generic-card.no-photo .desc{width:100%}
+.sheet.generic-card h1{font-size:23px;line-height:1.2}
+.sheet.generic-card .tag{max-width:calc(100% - 24px);line-height:1.4}
+.sheet.generic-card .meta{max-width:calc(100% - 104px);font-size:11px;line-height:1.5}
+.sheet .close-card{z-index:2}.sheet .detail[disabled]{color:#8b857c;cursor:default}
+.screen .tools{top:calc((100% + 45px)/2);bottom:auto;translate:0 -50%}
+.screen.card-open .tools{top:calc((100% + 45px - var(--map-card-height))/2)}
+.screen .zoom{top:157px}
+.screen.card-open .map{bottom:calc(87px + var(--map-card-height))!important}
+body[data-unified-tabs] .screen.card-open .list-button{opacity:1;pointer-events:auto;bottom:calc(87px + var(--map-card-height) + 12px)!important;left:50%;translate:-50%;height:32px;padding:0 14px}
+.map-search-results{position:absolute;z-index:70;left:20px;right:20px;top:91px;background:#fff;border:1px solid #e5e0d7;border-radius:16px;box-shadow:0 8px 24px #0002;max-height:240px;overflow:auto}
+.map-search-results:empty{display:none}.map-search-results button{display:block;padding:12px 14px;border:0;border-bottom:1px solid #eee;width:100%;background:white;text-align:left;font-size:13px;cursor:pointer}.map-search-results small{float:right;color:#888}
+@media(max-width:760px) and (max-height:760px){.screen .tools{width:144px;display:flex;padding:4px 0;border-radius:18px}.screen .tool{width:48px;height:48px}.screen .zoom{top:142px}}

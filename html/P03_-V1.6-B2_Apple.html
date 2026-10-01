@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>新叶村数字导览 · 首页 B2</title>
+  <style>
+    :root {
+      --bg:      oklch(98% 0.004 95);
+      --surface: oklch(99.5% 0.002 90);
+      --fg:      oklch(20% 0.018 70);
+      --muted:   oklch(48% 0.012 70);
+      --border:  oklch(90% 0.006 95);
+      --accent:  oklch(52% 0.10 28);
+
+      --font-display: 'Songti SC', 'STSong', 'SimSun', Georgia, serif;
+      --font-body:    -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+      --font-mono:    ui-monospace, 'SF Mono', Menlo, monospace;
+
+      --inset: 24px;
+      --title-gap: 16px;
+      --module-gap: 32px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; }
+    body {
+      background: radial-gradient(60% 80% at 50% 0%, oklch(98% 0.006 85) 0%, var(--bg) 60%);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+    }
+
+    .stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .caption {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .caption strong { color: var(--fg); font-weight: 500; }
+
+    .device {
+      position: relative;
+      width: 390px;
+      height: 844px;
+      border-radius: 56px;
+      padding: 12px;
+      background: linear-gradient(160deg, #2a2a2c 0%, #1a1a1c 50%, #0e0e10 100%);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04) inset,
+        0 0 0 2px #000 inset,
+        0 28px 60px -12px rgba(0,0,0,0.45),
+        0 8px 20px -8px rgba(0,0,0,0.35);
+      isolation: isolate;
+    }
+    .device::before, .device::after {
+      content: '';
+      position: absolute;
+      width: 3px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.06) 8%, transparent 16%, transparent 84%, rgba(255,255,255,0.04) 92%, transparent);
+      top: 100px;
+      bottom: 100px;
+      pointer-events: none;
+    }
+    .device::before { left: -1px; }
+    .device::after { right: -1px; }
+
+    .island {
+      position: absolute;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 124px;
+      height: 36px;
+      background: #000;
+      border-radius: 999px;
+      z-index: 5;
+    }
+
+    .btn-rail {
+      position: absolute;
+      width: 4px;
+      background: #0a0a0c;
+      border-radius: 2px;
+    }
+    .btn-rail.left-1 { left: -3px; top: 174px; height: 32px; }
+    .btn-rail.left-2 { left: -3px; top: 220px; height: 60px; }
+    .btn-rail.left-3 { left: -3px; top: 290px; height: 60px; }
+    .btn-rail.right-1 { right: -3px; top: 250px; height: 100px; }
+
+    .screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      border-radius: 44px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .statusbar {
+      flex: 0 0 47px;
+      padding: 18px 26px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.01em;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+    }
+    .statusbar .right { display: inline-flex; align-items: center; gap: 6px; }
+    .statusbar svg { width: 17px; height: 11px; fill: #fff; }
+    .statusbar .battery { width: 25px; }
+
+    .content {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+    .content::-webkit-scrollbar { display: none; }
+
+    .home-indicator {
+      flex: 0 0 28px;
+      position: relative;
+    }
+    .home-indicator::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 8px;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      background: var(--fg);
+      border-radius: 999px;
+      opacity: 0.85;
+    }
+
+    /* Hero scene */
+    .hero-scene {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 460px;
+      background-image: url('../assets/images/home/新叶南塘_程方程晓摄影_.jpg');
+      background-size: cover;
+      background-position: 54% 50%;
+      isolation: isolate;
+      z-index: 1;
+    }
+    .hero-scene::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0.36) 0%,
+        transparent 16%,
+        transparent 56%,
+        rgba(0,0,0,0.22) 84%,
+        rgba(0,0,0,0.44) 100%
+      );
+      z-index: 1;
+    }
+    .hero-scene > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .search-bar {
+      margin: 46px 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 15px;
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 22px;
+      color: #fff;
+      font-size: 14px;
+    }
+    .search-bar svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      opacity: 0.75;
+    }
+    .search-bar input {
+      flex: 1;
+      background: transparent;
+      border: 0;
+      color: #fff;
+      font: inherit;
+      outline: 0;
+    }
+    .search-bar input::placeholder {
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* Title moved up 28px total */
+    .hero-title-block {
+      position: absolute;
+      bottom: 118px;
+      left: 20px;
+      right: 20px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+      color: #fff;
+      margin: 0 0 7px;
+    }
+    .hero-subtitle {
+      font-size: 14px;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.92);
+      margin: 0;
+    }
+
+    /* Liquid glass - more transparent smoke gray-green with photo transmission */
+    .quick-actions {
+      position: absolute;
+      bottom: 34px;
+      left: 20px;
+      right: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(135, 142, 145, 0.08) 0%,
+        rgba(128, 135, 138, 0.04) 100%
+      );
+      backdrop-filter: blur(8px) saturate(125%);
+      -webkit-backdrop-filter: blur(8px) saturate(125%);
+      border: 0.5px solid rgba(255,255,255,0.38);
+      border-radius: 16px;
+      padding: 12px 14px;
+      box-shadow:
+        0 0 0 0.5px rgba(255,255,255,0.32) inset,
+        0 0 0 1px rgba(0,0,0,0.08) inset,
+        0 8px 28px rgba(0,0,0,0.12),
+        0 3px 8px rgba(0,0,0,0.08);
+      isolation: isolate;
+    }
+    .quick-actions::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 100%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .quick-action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      color: #fff;
+      font-size: 10px;
+      line-height: 1.2;
+      text-align: center;
+      cursor: pointer;
+    }
+    .quick-action svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.7;
+      opacity: 0.96;
+      filter: drop-shadow(0 0.5px 1px rgba(0,0,0,0.15));
+    }
+    .quick-action span {
+      text-shadow: 0 0.5px 1.5px rgba(0,0,0,0.2);
+    }
+
+    /* Warm-white content sheet overlaps hero by 18px */
+    .content-panel {
+      position: relative;
+      background: var(--surface);
+      border-radius: 32px 32px 0 0;
+      margin-top: 442px;
+      padding: 30px 0 120px;
+      box-shadow:
+        0 0 0 0.5px rgba(255,255,255,0.6) inset,
+        0 -10px 40px rgba(0,0,0,0.14),
+        0 -4px 16px rgba(0,0,0,0.08);
+      min-height: calc(100vh - 442px);
+      z-index: 2;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: 0.01em;
+      color: var(--fg);
+      margin: 0 0 var(--title-gap);
+      padding: 0 var(--inset);
+    }
+
+    /* Cultural Themes */
+    .culture-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 0 var(--inset) var(--module-gap);
+    }
+    .culture-card {
+      position: relative;
+      height: 160px;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      isolation: isolate;
+    }
+    .culture-card.card-1 {
+      background-image: url('../assets/images/home/新叶文昌阁.jpg');
+      background-size: cover;
+      background-position: 58% 50%;
+    }
+    .culture-card.card-2 {
+      background-image: url('../assets/images/home/新叶三月三-迎神.jpg');
+      background-size: cover;
+      background-position: 48% 52%;
+    }
+    .culture-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 32%, rgba(0,0,0,0.24) 68%, rgba(0,0,0,0.58) 100%);
+      z-index: 1;
+    }
+    .culture-card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 14px;
+      z-index: 2;
+      color: #fff;
+    }
+    .culture-card-tag {
+      display: inline-flex;
+      padding: 2px 8px;
+      background: rgba(255,255,255,0.16);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.04em;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+    .culture-card-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+
+    /* Exploration Entrance - 2×3 horizontal cards from A */
+    .core-entries {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+      padding: 0 var(--inset);
+      margin: 0 0 var(--module-gap);
+    }
+    .entry-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 15px;
+      cursor: pointer;
+      background: oklch(96.8% 0.002 75);
+      border: 0.5px solid oklch(91% 0.003 75);
+      border-radius: 15px;
+      transition: all 0.15s ease;
+      box-shadow: 0 0.5px 1px rgba(0,0,0,0.02);
+    }
+    .entry-item:active {
+      transform: scale(0.97);
+      background: oklch(95% 0.003 73);
+    }
+    .entry-icon {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+    }
+    .entry-icon svg {
+      width: 27px;
+      height: 27px;
+      stroke-width: 1.6;
+      fill: none;
+      stroke: oklch(38% 0.04 45);
+    }
+    .entry-text {
+      flex: 1;
+      min-width: 0;
+    }
+    .entry-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--fg);
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+    .entry-sublabel {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1;
+      opacity: 0.6;
+    }
+
+    /* Tour Recommendation */
+    .tour-card {
+      position: relative;
+      height: 170px;
+      background-image: url('../assets/images/home/新叶古村_副本.jpg');
+      background-size: cover;
+      background-position: 68% 50%;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 0 var(--inset) 32px;
+      cursor: pointer;
+      isolation: isolate;
+    }
+    .tour-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.28) 78%, rgba(0,0,0,0.52) 100%);
+      z-index: 1;
+    }
+    .tour-card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 15px 18px;
+      z-index: 2;
+      color: #fff;
+    }
+    .tour-card-tag {
+      display: inline-flex;
+      padding: 3px 9px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .tour-card-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      margin: 0 0 5px;
+    }
+    .tour-card-desc {
+      font-size: 13px;
+      line-height: 1.35;
+      color: rgba(255,255,255,0.92);
+      margin: 0 0 3px;
+    }
+    .tour-card-meta {
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.72);
+      margin: 0;
+    }
+
+    .tabbar {
+      flex: 0 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 6px 0 2px;
+      border-top: 0.5px solid oklch(88% 0.006 95);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    .tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 0 4px;
+      color: oklch(48% 0.012 70);
+      font-size: 10px;
+      font-weight: 400;
+      cursor: pointer;
+      position: relative;
+    }
+    .tab.active {
+      color: oklch(52% 0.10 28);
+    }
+    .tab.active::before {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 30px;
+      background: oklch(94% 0.008 120 / 0.32);
+      border-radius: 16px;
+      z-index: -1;
+    }
+    .tab svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+    }
+    .tab.active svg {
+      stroke-width: 1.8;
+    }
+
+    .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  </style>
+<link rel="stylesheet" href="../assets/styles/presentation.css">
+<script src="../js/chrome.js" defer></script>
+<script src="../js/navigation.js" defer></script>
+</head>
+<body data-unified-tabs>
+  <div class="stage">
+    <div class="caption"><strong>新叶村数字导览</strong> · P03 首页 </div>
+
+    <div class="device unified-device">
+<i class="unified-rail r1" aria-hidden="true"></i><i class="unified-rail r2" aria-hidden="true"></i><i class="unified-rail r3" aria-hidden="true"></i><i class="unified-rail r4" aria-hidden="true"></i><i class="unified-island" aria-hidden="true"></i>
+      <div class="screen">
+        <div class="statusbar">
+          <span class="num">9:41</span>
+          <span class="right">
+            <svg viewBox="0 0 17 11">
+              <rect x="0" y="7" width="3" height="4" rx="0.6"></rect>
+              <rect x="4" y="5" width="3" height="6" rx="0.6"></rect>
+              <rect x="8" y="3" width="3" height="8" rx="0.6"></rect>
+              <rect x="12" y="0" width="3" height="11" rx="0.6"></rect>
+            </svg>
+            <svg viewBox="0 0 17 11">
+              <path d="M8.5 1.5C5.5 1.5 2.7 2.6 0.5 4.6L2 6.1C3.8 4.5 6.1 3.6 8.5 3.6c2.4 0 4.7 0.9 6.5 2.5l1.5-1.5c-2.2-2-5-3.1-8-3.1zM3.5 7.6L5 9.1c1-0.9 2.2-1.4 3.5-1.4 1.3 0 2.5 0.5 3.5 1.4l1.5-1.5c-1.4-1.3-3.1-2-5-2-1.9 0-3.6 0.7-5 2zM6.5 10.6l2 2 2-2c-0.5-0.5-1.2-0.8-2-0.8s-1.5 0.3-2 0.8z"></path>
+            </svg>
+            <svg class="battery" viewBox="0 0 25 11">
+              <rect x="0.5" y="0.5" width="21" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-opacity="0.45"></rect>
+              <rect x="22" y="3.5" width="1.5" height="4" rx="0.4" fill="currentColor" fill-opacity="0.45"></rect>
+              <rect x="2" y="2" width="18" height="7" rx="1.4"></rect>
+            </svg>
+          </span>
+        </div>
+
+        <main class="content">
+          <section class="hero-scene">
+            <div class="search-bar" style="opacity: 1; margin-top: 62px;">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input type="text" placeholder="搜索古建、路线与故事">
+            </div>
+
+            <div class="hero-title-block">
+              <h1 class="hero-title">走进古村，循迹耕读</h1>
+              <p class="hero-subtitle">在山水与村巷之间，读懂新叶</p>
+            </div>
+
+            <div class="quick-actions" style="opacity: 0.9; border-radius: 27px; border-style: solid; border-top-width: 0.5px; padding-top: 12px; gap: 0px;">
+              <div class="quick-action" role="button" tabindex="0" data-nav="tickets">
+                <svg viewBox="0 0 24 24"><path d="M20 12V8H4v4M20 12H4M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"></path><line x1="16" y1="4" x2="16" y2="8"></line><line x1="8" y1="4" x2="8" y2="8"></line><line x1="12" y1="4" x2="12" y2="8"></line></svg>
+                <span>门票预约</span>
+              </div>
+              <div class="quick-action" role="button" tabindex="0" data-nav="map">
+                <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span>导览地图</span>
+              </div>
+              <div class="quick-action" role="button" tabindex="0" data-nav="rewardTasks">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
+                <span>打卡奖励</span>
+              </div>
+              <div class="quick-action" role="button" tabindex="0" data-pending="true">
+                <svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
+                <span>更多服务</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="content-panel">
+            <h2 class="section-title">文化主题</h2>
+            <div class="culture-cards">
+              <div class="culture-card card-1" role="button" tabindex="0" data-nav="cultureReading">
+                <div class="culture-card-content">
+                  <span class="culture-card-tag">阁中读</span>
+                  <h3 class="culture-card-title">耕读文脉</h3>
+                </div>
+              </div>
+              <div class="culture-card card-2" role="button" tabindex="0" data-nav="cultureFestival">
+                <div class="culture-card-content">
+                  <span class="culture-card-tag">三月三</span>
+                  <h3 class="culture-card-title">祭祖巡游</h3>
+                </div>
+              </div>
+            </div>
+
+            <h2 class="section-title">探索入口</h2>
+            <div class="core-entries">
+              <div class="entry-item" role="button" tabindex="0" data-pending="true">
+                <div class="entry-icon">
+                  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M9 22V12h6v10"></path></svg>
+                </div>
+                <div class="entry-text">
+                  <div class="entry-label">景点名片</div>
+                  <div class="entry-sublabel">Places</div>
+                </div>
+              </div>
+              <div class="entry-item" role="button" tabindex="0" data-pending="true">
+                <div class="entry-icon">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"></circle><path d="M12 2v4M12 18v4M20.66 7l-3.46 2M6.8 15l-3.46 2M3.34 7l3.46 2M17.2 15l3.46 2"></path></svg>
+                </div>
+                <div class="entry-text">
+                  <div class="entry-label">推荐游线</div>
+                  <div class="entry-sublabel">Routes</div>
+                </div>
+              </div>
+              <div class="entry-item" role="button" tabindex="0" data-pending="true">
+                <div class="entry-icon">
+                  <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12l9-9 9 9"></path><path d="M5 10v11h14V10"></path></svg>
+                </div>
+                <div class="entry-text">
+                  <div class="entry-label">古建寻踪</div>
+                  <div class="entry-sublabel">Heritage</div>
+                </div>
+              </div>
+              <div class="entry-item" role="button" tabindex="0" data-nav="cultureReading">
+                <div class="entry-icon">
+                  <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                </div>
+                <div class="entry-text">
+                  <div class="entry-label">耕读人家</div>
+                  <div class="entry-sublabel">Culture</div>
+                </div>
+              </div>
+              <div class="entry-item" role="button" tabindex="0" data-nav="cultureFestival">
+                <div class="entry-icon">
+                  <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                </div>
+                <div class="entry-text">
+                  <div class="entry-label">三月三</div>
+                  <div class="entry-sublabel">Festival</div>
+                </div>
+              </div>
+              <div class="entry-item" role="button" tabindex="0" data-nav="rewardTasks">
+                <div class="entry-icon">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M16.24 7.76l-4 4L8 8.5"></path><path d="M12 16a4 4 0 100-8 4 4 0 000 8z"></path></svg>
+                </div>
+                <div class="entry-text">
+                  <div class="entry-label">探索任务</div>
+                  <div class="entry-sublabel">Quests</div>
+                </div>
+              </div>
+            </div>
+
+            <h2 class="section-title">游览推荐</h2>
+            <div class="tour-card" role="button" tabindex="0" data-pending="true">
+              <div class="tour-card-content">
+                <span class="tour-card-tag">轻松入门</span>
+                <h3 class="tour-card-title">初见新叶｜推荐游线</h3>
+                <p class="tour-card-desc">沿南塘、古巷与塔影，认识新叶的空间脉络</p>
+                <p class="tour-card-meta">适合初次到访</p>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <nav class="tabbar">
+          <a class="tab active" data-nav="home" role="button" tabindex="0">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            首页
+          </a>
+          <a class="tab" data-nav="map" role="button" tabindex="0">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>
+            导览
+          </a>
+          <a class="tab" data-pending="true" role="button" tabindex="0">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+            探索
+          </a>
+          <a class="tab" data-nav="checkinXishan" role="button" tabindex="0">
+            <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+            任务
+          </a>
+          <a class="tab" data-nav="mine" role="button" tabindex="0">
+            <svg viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            我的
+          </a>
+        </nav>
+
+        <div class="home-indicator"></div>
+      </div>
+    </div>
+  </div>
+
+
+</body></html>
+

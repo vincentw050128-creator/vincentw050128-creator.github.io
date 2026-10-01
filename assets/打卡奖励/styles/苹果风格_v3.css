@@ -1,0 +1,67 @@
+/* v3：沿用原项目机框和导航，在页面内统一排版与卡片层次。 */
+.task-page,.xishan-page{-webkit-font-smoothing:antialiased;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif;color:#1d1d1f}
+.task-page .screen,.xishan-page .screen{background:#f5f5f7}
+.task-page .task-header h1{font-family:inherit;font-size:24px;font-weight:650;letter-spacing:-.7px}
+.task-page .task-header p{font-size:12px;letter-spacing:.4px;margin-top:5px;color:#86868b}
+.task-page .card,.xishan-page .card{border:1px solid #fff;border-radius:21px;box-shadow:0 3px 13px #14221c05;background:#ffffffed}
+.task-page .task-content{padding-left:14px;padding-right:14px}
+.task-page .souvenir{padding:15px 16px;min-height:194px;flex-basis:194px}
+.task-page .souvenir h2{font-family:inherit;font-size:25px;font-weight:650;letter-spacing:-1px;line-height:1.35}
+.task-page .souvenir>p{color:#86868b;font-size:11px;letter-spacing:0;margin-top:5px}
+.task-page .souvenir>.text-link{font-size:12px;margin-top:6px;font-weight:550}
+.task-page .souvenir-art{top:99px;bottom:9px;left:11px;right:11px;height:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 7px;background:transparent}
+.task-page .souvenir-art>img{display:block;width:64%;height:100%;object-fit:contain;transform:rotate(-5deg);filter:drop-shadow(0 5px 5px #00000012)}
+.task-page .magnet-placeholder{width:31%;height:100%;max-height:108px;border-radius:17px;background:#f2f5f2;gap:7px;color:#79847d;font-size:10px}
+.task-page .magnet-placeholder .icon{width:33px;height:33px;opacity:.58}
+.task-page .stamp-card{padding:14px 13px;gap:9px;min-height:73px}
+.task-page .stamp-card h2{font-family:inherit;font-weight:600;font-size:14px;letter-spacing:-.4px}
+.task-page .stamp-card h2 [data-count]{font-size:16px;color:#315f4f;font-variant-numeric:tabular-nums}
+.task-page .stamp-card p{font-size:10px;color:#86868b;margin-top:4px}
+.task-page .stamp-card .text-link{font-size:11px}
+.task-page .dots{gap:2px}.task-page .dots i{width:7px;height:7px;border-color:#c1c6cc}.task-page .dots .done{border-color:#315f4f;background:#315f4f}
+.task-page .journey{padding:14px 14px 12px}
+.task-page .journey>h2{font-family:inherit;font-size:21px;font-weight:650;letter-spacing:-.7px}
+.task-page .journey>p{font-size:11px;color:#86868b;letter-spacing:-.35px;margin:5px 0 10px}
+.task-page .journey .place-photo{border-radius:13px;height:104px}
+.task-page .place-info{margin:8px 0 11px}.task-page .place-info h3{font-family:inherit;font-size:17px;font-weight:600;letter-spacing:-.4px}.task-page .place-info p{font-size:11px;margin-top:1px;color:#86868b}
+.task-page .badge{font-size:11px;padding:5px 12px;background:#f2f2f7;color:#86868b}
+.task-page .primary,.xishan-page .primary{background:#315f4f;box-shadow:none;min-height:43px;font-size:15px;font-weight:600}
+.task-page .text-link{color:#315f4f}.task-page .task-tabs,.xishan-page .task-tabs{background:#fafafbdc;backdrop-filter:blur(22px);border-top-color:#e5e5e8}
+.reward-page .hero-postcard{width:50%;height:126px;object-fit:contain}
+.reward-page .locked-image{background:#eeeff1}
+.reward-page .locked-image>img{object-fit:contain;opacity:.72;filter:none;padding:4px 3px 20px}
+.reward-page .locked-image b{background:#f7f7f8df;left:0;right:0;bottom:0;padding:4px 0;font-size:10px}
+.reward-page .lock-badge{background:#ffffffeb;box-shadow:0 1px 8px #00000009;font-size:9px;top:29px}
+/* 奖励进度叠卡沿用西山祠堂基准：14px侧距、19px覆盖、相同照片渐变。 */
+.reward-page .reward-content{background:#f5f5f7}
+.reward-page .reward-hero::after{content:'';position:absolute;inset:52% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.27) 55%,#f5f5f7);pointer-events:none}
+.reward-page .reward-cards{margin:-19px 14px 12px;z-index:2}
+.reward-page .reward-progress{border:1px solid #fff;border-radius:21px;background:#ffffffed;box-shadow:0 3px 13px #14221c05}
+.xishan-page .xishan-content{display:flex;flex-direction:column;inset:0 0 87px;overflow:auto;padding-bottom:11px;scroll-behavior:auto}
+.xishan-hero{position:relative;flex:1 0 320px;min-height:320px;overflow:hidden}
+.xishan-hero>img{position:absolute;top:-52px;left:0;width:100%;height:calc(100% + 52px);object-fit:cover;object-position:50% 45%}
+.xishan-hero:after{content:'';position:absolute;inset:52% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.27) 55%,#f5f5f7)}
+.xishan-title{position:absolute;z-index:1;left:20px;bottom:36px;color:white;text-shadow:0 2px 10px #0005}
+.xishan-title h1{font:600 39px/1.25 'SimSun','Songti SC',serif;letter-spacing:1px}
+.xishan-title p{font-size:17px;color:white;letter-spacing:.2px;margin-top:5px;font-weight:500}
+.xishan-cards{display:flex;flex-direction:column;gap:11px;flex-shrink:0;position:relative;margin:-19px 14px 0}
+.xishan-task{padding:17px 15px 13px}
+.xishan-card-head{display:flex;align-items:center;justify-content:space-between;gap:9px}
+.xishan-card-head h2{font-size:22px;letter-spacing:-.5px;font-weight:650}
+.status-pill{padding:4px 11px;border-radius:13px;color:#315f4f;background:#eaf0ed;font-size:12px;font-weight:550}
+.status-pill:before{content:'';display:inline-block;width:8px;height:8px;background:#315f4f;border-radius:50%;margin-right:7px}
+.xishan-description{font-size:14px;line-height:1.7;margin:11px 0 12px;color:#717780}
+.xishan-progress{display:grid;grid-template-columns:minmax(0,1fr) 74px;gap:12px;margin-bottom:15px;align-items:center}
+.xishan-progress p{font-size:13px;color:#727984;white-space:nowrap}.xishan-progress strong{font-size:23px;color:#315f4f;font-weight:650;letter-spacing:-.5px}
+.xishan-progress .segments{margin-top:8px;gap:3px}.xishan-progress .segments i{height:8px;border-radius:8px}.xishan-progress .segments .done{background:#315f4f}
+.xishan-reward{border-left:1px solid #e4e5e6;padding-left:10px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:10px;line-height:1.5;color:#717780}
+.xishan-reward .icon{width:27px;height:27px;background:#f0f3f0;border-radius:8px;padding:2px}
+.xishan-page .primary{height:46px;font-size:17px;gap:12px}
+.xishan-intro{display:grid;grid-template-columns:minmax(0,1fr) 66px;gap:11px;padding:14px 15px;align-items:stretch}
+.xishan-intro h2{font-size:20px}.xishan-intro .text-link{font-size:10px;gap:0;color:#315f4f}.xishan-intro .text-link .icon{width:13px}
+.xishan-intro p{font-size:12px;line-height:1.75;color:#717780;margin-top:10px}
+.intro-photo{padding:0;overflow:hidden;border-radius:12px;background:#f1f2f3;min-height:96px}.intro-photo img{display:block;width:100%;height:100%;max-height:112px;object-fit:cover}
+.xishan-page .top-actions{top:56px;left:17px;right:17px}.xishan-page .round-button{width:38px;height:38px;background:#52635470;border-color:#ffffff70}
+.xishan-page [data-xishan-favorite][aria-pressed=true]{background:#315f4feb}
+.xishan-page .dialog-body .large-photo{display:block;width:100%;max-height:50vh;object-fit:contain;border-radius:12px}
+@media(max-width:375px){.task-page .stamp-card{gap:6px;padding:12px}.task-page .stamp-card h2{font-size:13px}.task-page .stamp-card h2 [data-count]{font-size:14px}.task-page .dots i{width:6px;height:6px}.task-page .journey>p{font-size:10px}.xishan-intro{grid-template-columns:minmax(0,1fr) 57px;gap:8px}.xishan-intro .text-link{font-size:9px}}

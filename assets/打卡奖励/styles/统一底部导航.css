@@ -1,0 +1,14 @@
+/* 新叶集章导航视觉基准；所有规则只作用于导航本身及其内部。
+   不覆盖 position、正文底边、手势区或其他页面元素。 */
+.screen > nav.tabbar,.screen > nav.task-tabs{height:59px!important;min-height:59px!important;max-height:59px!important;box-sizing:border-box!important}
+.screen > nav.task-tabs{padding-top:0!important;padding-bottom:0!important}
+.screen > nav.task-tabs > a,.screen > nav.task-tabs > button{min-height:0!important;max-height:57px!important}
+body[data-place] .screen > nav.task-tabs{bottom:29px!important}
+.screen > nav.nav-reference{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:0!important;padding:0!important;border:0!important;border-top:1px solid #e5e5e8!important;border-radius:0!important;background:#fafafbdc!important;backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;box-shadow:none!important}
+.screen > nav.nav-reference > .nav-reference-item{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:1px!important;width:100%!important;height:57px!important;min-height:0!important;max-height:57px!important;box-sizing:border-box!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:#707788!important;font:400 11px/16.5px -apple-system,BlinkMacSystemFont,'Microsoft YaHei','PingFang SC',sans-serif!important;text-decoration:none!important;box-shadow:none!important}
+.screen > nav.nav-reference > .nav-reference-item::before,.screen > nav.nav-reference > .nav-reference-item::after{display:none!important}
+.nav-reference .nav-reference-icon{display:flex!important;align-items:center!important;justify-content:center!important;width:60px!important;height:31px!important;flex-shrink:0!important;border-radius:30px!important;background:transparent!important}
+.nav-reference .nav-reference-icon img{display:block!important;width:25px!important;height:25px!important;margin:0!important;object-fit:contain!important;filter:none!important}
+.screen > nav.nav-reference > .active{color:#c90016!important}
+.nav-reference .active .nav-reference-icon{background:#fae9ec!important}
+.nav-reference .active .nav-reference-icon img{filter:invert(14%) sepia(85%) saturate(4848%) hue-rotate(344deg) brightness(76%) contrast(121%)!important}
